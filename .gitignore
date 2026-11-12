@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# User data and credentials
+data/settings.json
+data/firefox_profile/
+.vkus/
+*.session
+*.session-journal
+*.lock
+.env
+.env.*
+!.env.example
+
+# Logs and artifacts
+logs/*.log
+artifacts/
+*.log
+.DS_Store
+Thumbs.db
