@@ -371,7 +371,8 @@ class VkusApp:
         canvas.pack(fill='both', expand=True)
         self.exchange_canvas = canvas
         self.exchange_reference = Image.open(reference).convert('RGB')
-        self.exchange_sources_selected = set()\n        self.exchange_categories_selected = set()
+        self.exchange_sources_selected = set()
+        self.exchange_categories_selected = set()
         self.exchange_city = 'Оренбург'
         self.exchange_radius = '50 км'
         self.exchange_period = 'За всё время'
