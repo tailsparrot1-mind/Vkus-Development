@@ -95,7 +95,7 @@ def _exchange_redraw(self, _event=None):
 
     def badge(x, y, text_value, color, fill="#0d1a38", width=1):
         rounded(x, y, x + 112, y + 27, fill, color, 13, width)
-        label(x + 56, y + 6, text_value, 10, color, "bold", "n")
+        label(x + 56, y + 6, text_value, 8, color, "bold", "n", width=104, fit=True)
 
     # Deep blue background with restrained native neon atmosphere.
     for index in range(48):
@@ -116,25 +116,7 @@ def _exchange_redraw(self, _event=None):
     label(84, 35, "Vkus", 35, "#f2edff", "bold")
     label(40, 91, "ПОИСК СПРОСА", 9, "#8295c7", "bold")
     rule(31, 119, 249, 119, "#1e2c58")
-    # Tiger is the only retained raster decoration; all surrounding UI is native.
-    if not hasattr(self, "exchange_tiger_photo"):
-        try:
-            reference = getattr(self, "exchange_reference", None)
-            if reference is not None:
-                try:
-                    resampling = __import__("PIL.Image", fromlist=["Resampling"]).Resampling.LANCZOS
-                except Exception:
-                    from PIL import Image
-                    resampling = Image.LANCZOS
-                tiger = reference.crop((24, 165, 260, 370)).resize((188, 164), resampling)
-                from PIL import ImageTk
-                self.exchange_tiger_photo = ImageTk.PhotoImage(tiger)
-            else:
-                self.exchange_tiger_photo = None
-        except Exception:
-            self.exchange_tiger_photo = None
-    if getattr(self, "exchange_tiger_photo", None):
-        canvas.create_image(X(46), Y(129), image=self.exchange_tiger_photo, anchor="nw")
+    # Workspace stays typography-led; animal artwork is reserved for the lock screen.
 
     nav_items = (
         ("●", "Сообщения"),
