@@ -545,12 +545,12 @@ class VkusApp:
         if 1360 <= x <= 1618 and 716 <= y <= 897:
             messagebox.showinfo('Анализ спроса',
                 'В этом блоке показаны будущие параметры анализа. Реальная классификация и оценка спроса подключаются вместе с поисковыми источниками.', parent=self.exchange_window); return
-        if 10 <= x <= 266 and 375 <= y <= 705:
-            if y < 451: self._exchange_info('Сообщения')
-            elif y < 510: self._exchange_info('Поиск')
-            elif y < 553: self._exchange_info('Биржа')
-            elif y < 614: self._exchange_info('Мониторинг')
-            else: self._exchange_info('Настройки')
+        if 22 <= x <= 254 and 322 <= y <= 607:
+            if 322 <= y < 371: self._exchange_info('Сообщения')
+            elif 381 <= y < 430: self._exchange_info('Поиск')
+            elif 440 <= y < 489: self._exchange_info('Биржа')
+            elif 499 <= y < 548: self._exchange_info('Мониторинг')
+            elif 558 <= y < 607: self._exchange_info('Настройки')
 
     def _exchange_menu(self, event, title, options):
         menu = tk.Menu(self.exchange_window, tearoff=0, bg='#0a1531', fg='#edf3ff',
