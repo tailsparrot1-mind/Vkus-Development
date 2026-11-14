@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+import tkinter.font as tkfont
 
 
 def install_exchange_visuals():
@@ -49,15 +50,37 @@ def _exchange_redraw(self, _event=None):
             width=max(1, int(width * scale)), smooth=True
         )
 
+    font_cache = {}
+
     def label(x, y, value, size=14, color="#edf3ff", weight="normal",
-              anchor="nw", width=None, justify="left"):
+              anchor="nw", width=None, justify="left", fit=False):
+        font_size = max(7, int(size * scale))
+        font_spec = ("DejaVu Sans", font_size, weight)
+        if fit and width is not None and "\n" not in str(value):
+            available = max(1, int(width * scale))
+            while font_size > 7:
+                key = (font_size, weight)
+                if key not in font_cache:
+                    font_cache[key] = tkfont.Font(
+                        root=canvas, family="DejaVu Sans",
+                        size=font_size, weight=weight
+                    )
+                if font_cache[key].measure(str(value)) <= available:
+                    break
+                font_size -= 1
+            key = (font_size, weight)
+            if key not in font_cache:
+                font_cache[key] = tkfont.Font(
+                    root=canvas, family="DejaVu Sans",
+                    size=font_size, weight=weight
+                )
+            font_spec = font_cache[key]
         options = {
             "text": value, "anchor": anchor, "fill": color,
-            "font": ("DejaVu Sans", max(7, int(size * scale)), weight),
-            "justify": justify,
+            "font": font_spec, "justify": justify,
         }
         if width is not None:
-            options["width"] = width * scale
+            options["width"] = max(1, int(width * scale))
         canvas.create_text(X(x), Y(y), **options)
 
     def rule(x1, y1, x2, y2, color="#1b2d58", width=1):
@@ -139,14 +162,14 @@ def _exchange_redraw(self, _event=None):
     label(45, 756, "Биржа спроса", 10, "#788db9")
 
     # Header.
-    label(300, 34, "Биржа спроса и предложений", 32, "#d78aff", "bold")
+    label(300, 34, "Биржа спроса и предложений", 32, "#d78aff", "bold", width=1000, fit=True)
     label(302, 88,
           "Находите клиентов, исполнителей и актуальные задачи рядом с вами",
-          14, "#c7d5f4")
+          14, "#c7d5f4", width=980, fit=True)
     dot(1434, 43, 4, "#19e6a7")
-    label(1447, 35, "ИНТЕРФЕЙС АКТИВЕН", 9, "#72e9c7", "bold")
-    label(1444, 76, "Спрос есть.", 15, "#c58aff", "bold")
-    label(1444, 98, "Найдём вместе!", 15, "#c58aff", "bold")
+    label(1447, 35, "ИНТЕРФЕЙС АКТИВЕН", 9, "#72e9c7", "bold", width=170, fit=True)
+    label(1444, 76, "Спрос есть.", 15, "#c58aff", "bold", width=185, fit=True)
+    label(1444, 98, "Найдём вместе!", 15, "#c58aff", "bold", width=185, fit=True)
 
     # Five metric cards: retain hierarchy, never fabricate connected statistics.
     metrics = (
@@ -162,7 +185,7 @@ def _exchange_redraw(self, _event=None):
         rounded(left, 145, right, 315, "#0b1632", "#263c70", 16, 1)
         rounded(left + 1, 146, right - 1, 150, accent, accent, 2, 1)
         label(left + 17, 165, number, 9, accent, "bold")
-        label(left + 17, 188, title, 13, "#e9efff", "bold")
+        label(left + 17, 188, title, 13, "#e9efff", "bold", width=210, fit=True)
         label(left + 17, 222, value, 31, "#ffffff", "bold")
         rule(left + 17, 269, right - 17, 269, "#20335f")
         label(left + 17, 281, description, 8, "#94a8d1", width=210)
@@ -171,7 +194,7 @@ def _exchange_redraw(self, _event=None):
     rounded(300, 337, 1345, 556, "#091632", "#263f79", 17, 1)
     label(322, 353, "⌕", 28, "#36cfff", "bold")
     label(366, 359, "Умный поиск", 19, "#f1f4ff", "bold")
-    label(1138, 367, "РАСШИРЕННЫЙ ПОИСК  ⌄", 9, "#54baff", "bold")
+    label(1138, 367, "РАСШИРЕННЫЙ ПОИСК  ⌄", 9, "#54baff", "bold", width=190, fit=True)
     rounded(320, 435, 1165, 488, "#071129", "#405a91", 12, 1)
     entry = getattr(self, "exchange_entry", None)
     if entry is not None:
@@ -198,7 +221,7 @@ def _exchange_redraw(self, _event=None):
     for symbol, value, left, right in filters:
         rounded(left, 518, right, 548, "#0a1734", "#293e70", 10, 1)
         label(left + 10, 525, symbol, 11, "#a6b9e8", "bold")
-        label(left + 31, 526, value + "  ⌄", 9, "#dce6fb")
+        label(left + 31, 526, value + "  ⌄", 9, "#dce6fb", width=right-left-42, fit=True)
 
     # Source selectors with brand-specific native wordmarks.
     label(303, 575, "ИСТОЧНИКИ ПОИСКА", 9, "#8da2d1", "bold")
@@ -235,7 +258,7 @@ def _exchange_redraw(self, _event=None):
             label(left + 66, 620, "П", 20, "#ff647e", "bold", "n")
         else:
             label(left + 66, 619, "◎", 22, "#9b8cff", "bold", "n")
-        label(left + 66, 658, name, 10, "#edf2ff", "bold", "n")
+        label(left + 66, 658, name, 10, "#edf2ff", "bold", "n", width=116, fit=True)
         label(left + 66, 674, "ВЫБРАН" if active else "ДОСТУПЕН",
               6, accent if active else "#7185b1", "bold", "n")
 
@@ -256,16 +279,19 @@ def _exchange_redraw(self, _event=None):
         "Товары и предложения",
         "Поиск помощи и специалистов",
     )
+    selected_categories = getattr(self, "exchange_categories_selected", set())
     for index, category in enumerate(categories):
         top = 423 + index * 43
+        checked = category in selected_categories
         rounded(1383, top + 3, 1400, top + 20,
-                "#102b43", "#24c9e7", 4, 1)
-        # Check state is visual-only until category filtering is implemented.
-        label(1391, top + 2, "✓", 10, "#43e7cb", "bold", "n")
+                "#102b43" if checked else "#09172f",
+                "#24c9e7" if checked else "#405078", 4, 1)
+        if checked:
+            label(1391, top + 2, "✓", 10, "#43e7cb", "bold", "n")
         label(1412, top + 2, category, 8, "#d6e1f8", "normal",
- width=180)
+              width=180, fit=True)
     rounded(1381, 653, 1597, 685, "#211443", "#7340a9", 9, 1)
-    label(1393, 661, "Источники пока не подключены", 8, "#d7b7ff", "bold")
+    label(1393, 661, "Источники не подключены", 8, "#d7b7ff", "bold", width=190, fit=True)
 
     # Lower information area — honest empty states, no invented leads or map stats.
     rounded(300, 716, 855, 891, "#09152f", "#2b416f", 15, 1)
@@ -303,7 +329,7 @@ def _exchange_redraw(self, _event=None):
     # Bottom status strip.
     rule(300, 904, 1618, 904, "#24345f")
     dot(315, 920, 3, "#e9b85a")
-    label(326, 913, "Источники: ожидают подключения", 8, "#8fa4ce")
+    label(326, 913, "Источники: ожидают подключения", 8, "#8fa4ce", width=380, fit=True)
     label(1020, 913, "Данные и статистика появятся после интеграции", 8,
           "#7188b6", "normal", "center")
     label(1599, 913, "VKUS 3.17", 8, "#9b83c9", "bold", "ne")
