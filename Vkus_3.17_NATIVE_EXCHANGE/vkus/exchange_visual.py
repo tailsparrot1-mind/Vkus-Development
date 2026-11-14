@@ -94,8 +94,8 @@ def _exchange_redraw(self, _event=None):
         )
 
     def badge(x, y, text_value, color, fill="#0d1a38", width=1):
-        rounded(x, y, x + 112, y + 27, fill, color, 13, width)
-        label(x + 56, y + 6, text_value, 8, color, "bold", "n", width=104, fit=True)
+        rounded(x, y, x + 150, y + 27, fill, color, 13, width)
+        label(x + 75, y + 6, text_value, 8, color, "bold", "n", width=142, fit=True)
 
     # Deep blue background with restrained native neon atmosphere.
     for index in range(48):
