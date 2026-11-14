@@ -31,7 +31,6 @@ class PreviewHost:
         # in the headless X server (which runs without a window manager).
         self.root.withdraw()
         self.exchange_window = None
-        self.exchange_tiger_photo = None
         self.exchange_categories_selected = set()
 
         install_exchange_visuals()
@@ -86,12 +85,16 @@ def capture_and_close(host: PreviewHost, output: Path):
     image = ImageGrab.grab(bbox=(x, y, x + width, y + height)).convert("RGB")
     # The left rail must be fully visible and the Vkus wordmark must not be
     # covered by the hidden Tk host window.
-    if image.getpixel((230, 200)) != (7, 13, 37):
+    if image.getpixel((250, 130)) != (7, 13, 37):
         raise RuntimeError("Left brand rail is occluded or incorrectly rendered")
     logo = image.crop((80, 20, 230, 85))
     bright_pixels = sum(1 for pixel in logo.getdata() if max(pixel) > 150)
     if bright_pixels < 100:
         raise RuntimeError("Vkus wordmark is clipped or missing")
+    tiger = image.crop((15, 165, 255, 370))
+    tiger_pixels = sum(1 for pixel in tiger.getdata() if max(pixel) > 95)
+    if tiger_pixels < 1500:
+        raise RuntimeError("Reference tiger artwork is missing or clipped")
     image.save(output, format="PNG")
     if output.stat().st_size < 50_000:
         raise RuntimeError("Captured UI screenshot is unexpectedly small")
