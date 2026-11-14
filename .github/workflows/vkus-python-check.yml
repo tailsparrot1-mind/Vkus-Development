@@ -31,10 +31,17 @@ jobs:
           mkdir -p artifacts
           xvfb-run -a -s "-screen 0 1920x1080x24" .venv/bin/python tools/render_exchange_preview.py --output artifacts/Vkus_3.17_Exchange.png
 
-      - name: Upload real UI screenshot
+      - name: Package runnable Vkus source archive
+        run: |
+          cd Vkus_3.17_NATIVE_EXCHANGE
+          zip -qr ../artifacts/Vkus_3.17_NATIVE_EXCHANGE.zip . -x "*/__pycache__/*" "*.pyc"
+
+      - name: Upload screenshot and runnable source archive
         uses: actions/upload-artifact@v4
         with:
-          name: Vkus-3.17-Exchange-preview
-          path: artifacts/Vkus_3.17_Exchange.png
+          name: Vkus-3.17-Exchange-build
+          path: |
+            artifacts/Vkus_3.17_Exchange.png
+            artifacts/Vkus_3.17_NATIVE_EXCHANGE.zip
           if-no-files-found: error
           retention-days: 14
