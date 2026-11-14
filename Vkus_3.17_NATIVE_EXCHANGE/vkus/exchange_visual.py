@@ -257,7 +257,7 @@ def _exchange_redraw(self, _event=None):
         "Поиск помощи и специалистов",
     )
     for index, category in enumerate(categories):
- top = 423 + index * 43
+        top = 423 + index * 43
         rounded(1383, top + 3, 1400, top + 20,
                 "#102b43", "#24c9e7", 4, 1)
         # Check state is visual-only until category filtering is implemented.
@@ -296,7 +296,7 @@ def _exchange_redraw(self, _event=None):
         "Оценка релевантности",
         "Новые заявки",
     )):
- top = 774 + index * 26
+        top = 774 + index * 26
         dot(1376, top + 7, 3, "#26d9b6")
         label(1388, top, title, 8, "#cbd8f2")
 
@@ -308,4 +308,4 @@ def _exchange_redraw(self, _event=None):
           "#7188b6", "normal", "center")
     label(1599, 913, "VKUS 3.17", 8, "#9b83c9", "bold", "ne")
 
- self.exchange_hit_scale = scale
+    self.exchange_hit_scale = scale
