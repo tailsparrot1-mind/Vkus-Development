@@ -371,7 +371,7 @@ class VkusApp:
         canvas.pack(fill='both', expand=True)
         self.exchange_canvas = canvas
         self.exchange_reference = Image.open(reference).convert('RGB')
-        self.exchange_sources_selected = {'Avito'}
+        self.exchange_sources_selected = set()\n        self.exchange_categories_selected = set()
         self.exchange_city = 'Оренбург'
         self.exchange_radius = '50 км'
         self.exchange_period = 'За всё время'
@@ -539,6 +539,25 @@ class VkusApp:
             self._exchange_menu(event, 'Период', ['За сутки','За 7 дней','За 30 дней','За 3 месяца','За всё время']); return
         if 901 <= x <= 1094 and 498 <= y <= 541:
             self._exchange_menu(event, 'Категория', ['Все категории','Услуги и ремонт','Работа и вакансии','Покупка и продажа','Разовые задачи','Помощь и специалисты']); return
+        if 1380 <= x <= 1608 and 423 <= y < 638:
+            categories = (
+                'Заявки на услуги и ремонт',
+                'Разовые задачи и подработка',
+                'Вакансии и работа',
+                'Товары и предложения',
+                'Поиск помощи и специалистов',
+            )
+            index = int((y - 423) // 43)
+            if 0 <= index < len(categories):
+                selected = getattr(self, 'exchange_categories_selected', set())
+                category = categories[index]
+                if category in selected:
+                    selected.remove(category)
+                else:
+                    selected.add(category)
+                self.exchange_categories_selected = selected
+                self._exchange_redraw()
+                return
         if 1360 <= x <= 1618 and 373 <= y <= 700:
             messagebox.showinfo('Что можно найти?',
                 'Vkus предназначен для поиска заявок на услуги, разовых задач, вакансий, товаров, предложений и потребности в специалистах.', parent=self.exchange_window); return
@@ -583,9 +602,13 @@ class VkusApp:
         if not self.exchange_sources_selected:
             messagebox.showwarning('Vkus — поиск', 'Выберите хотя бы один источник.', parent=self.exchange_window)
             return
+        selected_categories = sorted(getattr(self, 'exchange_categories_selected', set()))
+        category_text = ', '.join(selected_categories) if selected_categories else 'Все типы'
         messagebox.showinfo('Vkus — поиск',
             'Запрос: ' + query + '\nИсточники: ' + ', '.join(sorted(self.exchange_sources_selected)) +
-            '\n\nВизуальная часть готова. Реальные коннекторы и сбор актуальных объявлений ещё не подключены.', parent=self.exchange_window)
+            '\nТипы: ' + category_text +
+            '\n\nВыбор параметров сохранён в интерфейсе. Реальные коннекторы и сбор актуальных объявлений ещё не подключены.',
+            parent=self.exchange_window)
 
     def _show_about(self):
         messagebox.showinfo('Vkus', 'Vkus — универсальный локальный инструмент поиска клиентов в VK.\n\nСборка 3.1: Kali Linux + Firefox + Selenium. Реальный поиск VK и реальные сообщения без демо-данных.')
