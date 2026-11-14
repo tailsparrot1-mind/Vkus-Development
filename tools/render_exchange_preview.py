@@ -27,6 +27,9 @@ class PreviewHost:
         self.root.title("Vkus preview host")
         self.root.geometry("420x120+10+10")
         self.root.configure(bg="#030817")
+        # Hide the host window so it cannot cover the upper-left of the Toplevel
+        # in the headless X server (which runs without a window manager).
+        self.root.withdraw()
         self.exchange_window = None
         self.exchange_tiger_photo = None
         self.exchange_categories_selected = set()
@@ -80,7 +83,15 @@ def capture_and_close(host: PreviewHost, output: Path):
     width, height = window.winfo_width(), window.winfo_height()
     if width < 1500 or height < 800:
         raise RuntimeError(f"Unexpected Exchange window size: {width}x{height}")
-    image = ImageGrab.grab(bbox=(x, y, x + width, y + height))
+    image = ImageGrab.grab(bbox=(x, y, x + width, y + height)).convert("RGB")
+    # The left rail must be fully visible and the Vkus wordmark must not be
+    # covered by the hidden Tk host window.
+    if image.getpixel((230, 200)) != (7, 13, 37):
+        raise RuntimeError("Left brand rail is occluded or incorrectly rendered")
+    logo = image.crop((80, 20, 230, 85))
+    bright_pixels = sum(1 for pixel in logo.getdata() if max(pixel) > 150)
+    if bright_pixels < 100:
+        raise RuntimeError("Vkus wordmark is clipped or missing")
     image.save(output, format="PNG")
     if output.stat().st_size < 50_000:
         raise RuntimeError("Captured UI screenshot is unexpectedly small")
