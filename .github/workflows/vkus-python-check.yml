@@ -1,4 +1,4 @@
-name: Vkus Python syntax check
+name: Vkus visual and Python checks
 
 on:
   push:
@@ -6,14 +6,42 @@ on:
   workflow_dispatch:
 
 jobs:
-  compile:
+  visual-smoke:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+
+      - name: Install Tk and virtual display
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-tk xvfb xauth
+
+      - name: Set up Python environment
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install --upgrade pip
+          .venv/bin/pip install -r Vkus_3.17_NATIVE_EXCHANGE/requirements.txt
+
       - name: Compile all Python modules
-        run: python -m compileall -q .
+        run: .venv/bin/python -m compileall -q Vkus_3.17_NATIVE_EXCHANGE
+
+      - name: Render the actual Tkinter Exchange window
+        run: |
+          mkdir -p artifacts
+          Xvfb :99 -screen 0 1920x1080x24 -nolisten tcp &
+          XVFB_PID=$!
+          trap 'kill $XVFB_PID || true' EXIT
+          for i in $(seq 1 30); do
+            if xdpyinfo -display :99 >/dev/null 2>&1; then break; fi
+            sleep 1
+          done
+          DISPLAY=:99 .venv/bin/python tools/render_exchange_preview.py --output artifacts/Vkus_3.17_Exchange.png
+
+      - name: Upload real UI screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: Vkus-3.17-Exchange-preview
+          path: artifacts/Vkus_3.17_Exchange.png
+          if-no-files-found: error
+          retention-days: 14
