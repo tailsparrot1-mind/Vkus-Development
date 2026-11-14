@@ -108,6 +108,43 @@ def _exchange_redraw(self, _event=None):
         y2 = int(941 * (index + 1) / 48) + 1
         canvas.create_rectangle(X(0), Y(y1), X(1672), Y(y2),
                                 fill=color, outline=color)
+    # Subtle blue/purple energy haze from the approved reference. This is a
+    # generated background layer, not a flattened screenshot; every control
+    # above it remains native and interactive.
+    atmosphere = getattr(self, "_exchange_atmosphere_photo", None)
+    atmosphere_size = getattr(self, "_exchange_atmosphere_size", None)
+    if atmosphere is None or atmosphere_size != (rw, rh):
+        try:
+            from PIL import Image, ImageDraw, ImageFilter, ImageTk
+            base = Image.new("RGBA", (1672, 941), (0, 0, 0, 0))
+            glow = Image.new("RGBA", base.size, (0, 0, 0, 0))
+            gd = ImageDraw.Draw(glow)
+            gd.ellipse((470, -360, 1420, 420), fill=(20, 77, 190, 30))
+            gd.ellipse((1080, 160, 1800, 940), fill=(35, 28, 170, 22))
+            gd.ellipse((180, 480, 930, 1180), fill=(66, 20, 150, 18))
+            glow = glow.filter(ImageFilter.GaussianBlur(105))
+            base = Image.alpha_composite(base, glow)
+            streak = Image.new("RGBA", base.size, (0, 0, 0, 0))
+            sd = ImageDraw.Draw(streak)
+            paths = [
+                [(820, 0), (900, 70), (855, 125), (1010, 185), (1080, 255)],
+                [(1240, 0), (1185, 90), (1270, 135), (1190, 205), (1325, 280)],
+                [(560, 940), (650, 845), (600, 770), (760, 700), (815, 610)],
+            ]
+            for path in paths:
+                for width, color in ((15, (18, 92, 255, 13)), (5, (35, 133, 255, 24)), (2, (75, 174, 255, 34))):
+                    sd.line(path, fill=color, width=width, joint="curve")
+            streak = streak.filter(ImageFilter.GaussianBlur(9))
+            base = Image.alpha_composite(base, streak)
+            resampling = getattr(Image, "Resampling", Image).LANCZOS
+            photo = ImageTk.PhotoImage(base.resize((max(1, rw), max(1, rh)), resampling))
+            self._exchange_atmosphere_photo = photo
+            self._exchange_atmosphere_size = (rw, rh)
+            atmosphere = photo
+        except Exception:
+            atmosphere = None
+    if atmosphere is not None:
+        canvas.create_image(ox, oy, image=atmosphere, anchor="nw")
     rounded(7, 7, 1665, 934, "#050b1e", "#39206f", 23, 2)
 
     # Left brand rail and the exact supplied Vkus identity artwork.
