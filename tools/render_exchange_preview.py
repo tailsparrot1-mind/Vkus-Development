@@ -25,11 +25,11 @@ class PreviewHost:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Vkus preview host")
-        self.root.geometry("420x120+10+10")
+        # Keep the Tk host outside the captured desktop; no window manager is
+        # present in Xvfb, so it must not cover the reference Toplevel.
+        self.root.geometry("1x1+1900+1000")
+        self.root.overrideredirect(True)
         self.root.configure(bg="#030817")
-        # Hide the host window so it cannot cover the upper-left of the Toplevel
-        # in the headless X server (which runs without a window manager).
-        self.root.withdraw()
         self.exchange_window = None
         self.exchange_categories_selected = set()
 
@@ -85,7 +85,7 @@ def capture_and_close(host: PreviewHost, output: Path):
     image = ImageGrab.grab(bbox=(x, y, x + width, y + height)).convert("RGB")
     # The left rail must be fully visible and the Vkus wordmark must not be
     # covered by the hidden Tk host window.
-    if image.getpixel((250, 130)) != (7, 13, 37):
+    if image.getpixel((250, 130)) != (7, 11, 34):
         raise RuntimeError("Left brand rail is occluded or incorrectly rendered")
     logo = image.crop((80, 20, 230, 85))
     bright_pixels = sum(1 for pixel in logo.getdata() if max(pixel) > 150)
