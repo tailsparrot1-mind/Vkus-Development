@@ -344,6 +344,13 @@ class VkusApp:
                     return
             except tk.TclError:
                 pass
+        if Image is None or ImageTk is None:
+            messagebox.showerror('Vkus — Биржа', 'Для отображения интерфейса необходим Pillow.')
+            return
+        reference = Path(__file__).resolve().parent / 'assets' / 'birzha_reference.png'
+        if not reference.exists():
+            messagebox.showerror('Vkus — Биржа', 'Не найден утверждённый визуал: ' + str(reference))
+            return
         win = tk.Toplevel(self.root)
         self.exchange_window = win
         win.title('Vkus — Биржа спроса и предложений')
@@ -363,8 +370,15 @@ class VkusApp:
         canvas = tk.Canvas(win, bg='#020516', highlightthickness=0, bd=0)
         canvas.pack(fill='both', expand=True)
         self.exchange_canvas = canvas
-        self.exchange_sources_selected = set()
-        self.exchange_categories_selected = set()
+        self.exchange_reference = Image.open(reference).convert('RGB')
+        self.exchange_sources_selected = {'Avito'}
+        self.exchange_categories_selected = {
+            'Заявки на услуги и ремонт',
+            'Разовые задачи и подработка',
+            'Вакансии и работу',
+            'Товары и предложения',
+            'Потребность в помощи и специалистах',
+        }
         self.exchange_city = 'Оренбург'
         self.exchange_radius = '50 км'
         self.exchange_period = 'За всё время'
@@ -532,15 +546,15 @@ class VkusApp:
             self._exchange_menu(event, 'Период', ['За сутки','За 7 дней','За 30 дней','За 3 месяца','За всё время']); return
         if 901 <= x <= 1094 and 498 <= y <= 541:
             self._exchange_menu(event, 'Категория', ['Все категории','Услуги и ремонт','Работа и вакансии','Покупка и продажа','Разовые задачи','Помощь и специалисты']); return
-        if 1380 <= x <= 1608 and 423 <= y < 638:
+        if 1380 <= x <= 1608 and 430 <= y < 630:
             categories = (
                 'Заявки на услуги и ремонт',
                 'Разовые задачи и подработка',
-                'Вакансии и работа',
+                'Вакансии и работу',
                 'Товары и предложения',
-                'Поиск помощи и специалистов',
+                'Потребность в помощи и специалистах',
             )
-            index = int((y - 423) // 43)
+            index = int((y - 438) // 39)
             if 0 <= index < len(categories):
                 selected = getattr(self, 'exchange_categories_selected', set())
                 category = categories[index]
@@ -557,12 +571,24 @@ class VkusApp:
         if 1360 <= x <= 1618 and 716 <= y <= 897:
             messagebox.showinfo('Анализ спроса',
                 'В этом блоке показаны будущие параметры анализа. Реальная классификация и оценка спроса подключаются вместе с поисковыми источниками.', parent=self.exchange_window); return
-        if 22 <= x <= 254 and 322 <= y <= 607:
-            if 322 <= y < 371: self._exchange_info('Сообщения')
-            elif 381 <= y < 430: self._exchange_info('Поиск')
-            elif 440 <= y < 489: self._exchange_info('Биржа')
-            elif 499 <= y < 548: self._exchange_info('Мониторинг')
-            elif 558 <= y < 607: self._exchange_info('Настройки')
+        if 10 <= x <= 254 and 375 <= y <= 676:
+            if 375 <= y < 432: self._exchange_info('Сообщения')
+            elif 436 <= y < 493: self._exchange_info('Поиск')
+            elif 497 <= y < 554: self._exchange_info('Биржа')
+            elif 558 <= y < 615: self._exchange_info('Мониторинг')
+            elif 619 <= y < 676: self._exchange_info('Настройки')
+        if 1480 <= x <= 1525 and 20 <= y <= 58:
+            self.exchange_window.iconify()
+            return
+        if 1530 <= x <= 1575 and 20 <= y <= 58:
+            try:
+                self.exchange_window.state('normal' if self.exchange_window.state() == 'zoomed' else 'zoomed')
+            except tk.TclError:
+                pass
+            return
+        if 1580 <= x <= 1628 and 20 <= y <= 58:
+            self._exchange_close()
+            return
 
     def _exchange_menu(self, event, title, options):
         menu = tk.Menu(self.exchange_window, tearoff=0, bg='#0a1531', fg='#edf3ff',
