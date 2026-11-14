@@ -8,6 +8,11 @@ from pathlib import Path
 from types import MethodType
 
 import tkinter as tk
+import sys
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1] / "Vkus_3.17_NATIVE_EXCHANGE"
+sys.path.insert(0, str(PROJECT_ROOT))
+
 from PIL import ImageGrab
 
 from vkus.app import VkusApp
