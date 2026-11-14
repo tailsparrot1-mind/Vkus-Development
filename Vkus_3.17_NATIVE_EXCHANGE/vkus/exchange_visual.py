@@ -259,8 +259,8 @@ def _exchange_redraw(self, _event=None):
         else:
             label(left + 66, 619, "◎", 22, "#9b8cff", "bold", "n")
         label(left + 66, 658, name, 10, "#edf2ff", "bold", "n", width=116, fit=True)
-        label(left + 66, 674, "ВЫБРАН" if active else "ДОСТУПЕН",
-              6, accent if active else "#7185b1", "bold", "n")
+        label(left + 66, 674, "ВЫБРАН" if active else "НЕ ПОДКЛЮЧЁН",
+              6, accent if active else "#7185b1", "bold", "n", width=116, fit=True)
 
     rounded(1185, 602, 1343, 688, "#09142e", "#293e70", 14, 1)
     label(1264, 615, "+", 23, "#b9caff", "bold", "n")
@@ -299,9 +299,9 @@ def _exchange_redraw(self, _event=None):
     dot(345, 800, 18, "#10274b")
     label(345, 789, "⌕", 19, "#46cfff", "bold", "n")
     label(377, 779, "Здесь появятся найденные публикации", 10,
-          "#e1eaff", "bold", width=420)
+          "#e1eaff", "bold", width=420, fit=True)
     label(377, 802, "после подключения поисковых источников", 9,
-          "#8299c6", width=420)
+          "#8299c6", width=420, fit=True)
     badge(322, 847, "ОЖИДАЕТ ДАННЫХ", "#6f94c8", "#0c1b37")
 
     rounded(870, 716, 1332, 891, "#09152f", "#2b416f", 15, 1)
@@ -312,7 +312,7 @@ def _exchange_redraw(self, _event=None):
     for gy in range(3):
         rule(902, 776 + gy * 37, 1190, 776 + gy * 37, "#172c51")
     label(1047, 813, "КАРТА ПОЯВИТСЯ ПОСЛЕ ПОИСКА", 8,
-          "#8299c6", "bold", "center")
+          "#8299c6", "bold", "center", width=270, fit=True)
 
     rounded(1347, 716, 1618, 891, "#09152f", "#2b416f", 15, 1)
     label(1368, 735, "АНАЛИЗ СПРОСА", 9, "#9db3e3", "bold")
@@ -331,7 +331,7 @@ def _exchange_redraw(self, _event=None):
     dot(315, 920, 3, "#e9b85a")
     label(326, 913, "Источники: ожидают подключения", 8, "#8fa4ce", width=380, fit=True)
     label(1020, 913, "Данные и статистика появятся после интеграции", 8,
-          "#7188b6", "normal", "center")
+          "#7188b6", "normal", "center", width=540, fit=True)
     label(1599, 913, "VKUS 3.17", 8, "#9b83c9", "bold", "ne")
 
     self.exchange_hit_scale = scale
