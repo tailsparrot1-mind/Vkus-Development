@@ -180,8 +180,9 @@ def _exchange_redraw(self, _event=None):
     label(46, 746, "Ваш статус", 12, "#b7c8ed")
     dot(54, 774, 7, "#11e8b4")
     label(70, 761, "Активен", 15, "#00e5b4", "bold")
-    label(46, 808, "★  Премиум", 15, "#ffc34d", "bold")
-    label(82, 835, "до 24.12.2026", 10, "#a6b6dc")
+    rule(44, 800, 232, 800, "#20365f")
+    label(46, 809, "Vkus 3.17", 14, "#dce7ff", "bold")
+    label(46, 835, "Биржа спроса", 10, "#a6b6dc")
     label(36, 884, "Vkus 3.17", 12, "#8b9cc8")
 
     # Header and compact custom window controls.
