@@ -110,73 +110,125 @@ def _exchange_redraw(self, _event=None):
                                 fill=color, outline=color)
     rounded(7, 7, 1665, 934, "#050b1e", "#39206f", 23, 2)
 
-    # Left brand rail.
-    rounded(13, 13, 267, 928, "#070d25", "#30205f", 20, 1)
-    label(38, 25, "♛", 36, "#bd76ff", "bold")
-    label(84, 35, "Vkus", 35, "#f2edff", "bold")
-    label(40, 91, "ПОИСК СПРОСА", 9, "#8295c7", "bold")
-    rule(31, 119, 249, 119, "#1e2c58")
-    # Workspace stays typography-led; animal artwork is reserved for the lock screen.
+    # Left brand rail and the exact supplied Vkus identity artwork.
+    rounded(13, 13, 267, 928, "#070b22", "#49218f", 20, 1)
+    reference = getattr(self, "exchange_reference", None)
+    if not hasattr(self, "exchange_brand_photo"):
+        self.exchange_brand_photo = None
+        try:
+            if reference is not None:
+                from PIL import Image, ImageTk
+                logo = reference.crop((28, 24, 238, 153)).convert("RGBA")
+                pixels = logo.load()
+                for py in range(logo.height):
+                    for px in range(logo.width):
+                        red, green, blue, alpha = pixels[px, py]
+                        brightness = max(red, green, blue)
+                        if brightness < 34:
+                            pixels[px, py] = (red, green, blue, 0)
+                        elif brightness < 70 and blue < 95:
+                            pixels[px, py] = (red, green, blue, int((brightness - 34) * 7))
+                resampling = getattr(Image, "Resampling", Image).LANCZOS
+                self.exchange_brand_photo = ImageTk.PhotoImage(logo.resize((206, 126), resampling))
+        except Exception:
+            self.exchange_brand_photo = None
+    if getattr(self, "exchange_brand_photo", None):
+        canvas.create_image(X(30), Y(15), image=self.exchange_brand_photo, anchor="nw")
+    else:
+        label(38, 28, "♛", 36, "#bd76ff", "bold")
+        label(84, 35, "Vkus", 35, "#f2edff", "bold")
+    label(40, 141, "ПОИСК СПРОСА", 9, "#8295c7", "bold")
+    rule(31, 164, 249, 164, "#28205b")
+    if not hasattr(self, "exchange_tiger_photo"):
+        self.exchange_tiger_photo = None
+        try:
+            if reference is not None:
+                from PIL import Image, ImageTk
+                tiger = reference.crop((17, 158, 260, 370)).convert("RGBA")
+                pixels = tiger.load()
+                for py in range(tiger.height):
+                    for px in range(tiger.width):
+                        red, green, blue, alpha = pixels[px, py]
+                        if max(red, green, blue) < 22:
+                            pixels[px, py] = (red, green, blue, 0)
+                resampling = getattr(Image, "Resampling", Image).LANCZOS
+                self.exchange_tiger_photo = ImageTk.PhotoImage(tiger.resize((238, 207), resampling))
+        except Exception:
+            self.exchange_tiger_photo = None
+    if getattr(self, "exchange_tiger_photo", None):
+        canvas.create_image(X(14), Y(166), image=self.exchange_tiger_photo, anchor="nw")
 
     nav_items = (
-        ("●", "Сообщения"),
+        ("☏", "Сообщения"),
         ("⌕", "Поиск"),
         ("⇄", "Биржа"),
         ("▥", "Мониторинг"),
         ("⚙", "Настройки"),
     )
     for index, (symbol, name) in enumerate(nav_items):
-        top = 322 + index * 59
+        top = 375 + index * 61
         active = name == "Биржа"
         if active:
-            rounded(22, top, 254, top + 49, "#211044", "#9b4dff", 13, 2)
-        label(43, top + 11, symbol, 21,
-              "#40d9ff" if active else "#9a78db", "bold")
-        label(82, top + 15, name, 14,
-              "#ffffff" if active else "#a9b7d8",
+            rounded(10, top - 2, 254, top + 55, "#24105b", "#9c35ff", 14, 3)
+            rounded(13, top + 1, 251, top + 52, "#101c4a", "#168fe9", 12, 1)
+        label(37, top + 12, symbol, 25,
+              "#35dfff" if active else "#9c78ef", "bold")
+        label(91, top + 17, name, 16,
+              "#ffffff" if active else "#a9b7e5",
               "bold" if active else "normal")
-    rounded(28, 640, 250, 802, "#0a1833", "#254a79", 14, 1)
-    label(45, 657, "ВАШ СТАТУС", 9, "#8da6d8", "bold")
-    dot(51, 690, 4, "#15e2b2")
-    label(64, 681, "Активен", 14, "#d8fff5", "bold")
-    rule(44, 715, 232, 715, "#20365f")
-    label(45, 731, "Vkus 3.17", 12, "#b9c9eb", "bold")
-    label(45, 756, "Биржа спроса", 10, "#788db9")
+    rounded(28, 728, 250, 855, "#0a1734", "#2d65aa", 17, 1)
+    label(46, 746, "Ваш статус", 12, "#b7c8ed")
+    dot(54, 774, 7, "#11e8b4")
+    label(70, 761, "Активен", 15, "#00e5b4", "bold")
+    label(46, 808, "★  Премиум", 15, "#ffc34d", "bold")
+    label(82, 835, "до 24.12.2026", 10, "#a6b6dc")
+    label(36, 884, "Vkus 3.17", 12, "#8b9cc8")
 
-    # Header.
-    label(300, 34, "Биржа спроса и предложений", 32, "#d78aff", "bold", width=1000, fit=True)
-    label(302, 88,
+    # Header and compact custom window controls.
+    label(306, 43, "Биржа спроса и предложений", 38, "#cf74ff", "bold",
+          width=1000, fit=True)
+    label(307, 105,
           "Находите клиентов, исполнителей и актуальные задачи рядом с вами",
-          14, "#c7d5f4", width=980, fit=True)
-    dot(1434, 43, 4, "#19e6a7")
-    label(1447, 35, "ИНТЕРФЕЙС АКТИВЕН", 9, "#72e9c7", "bold", width=170, fit=True)
-    label(1444, 76, "Спрос есть.", 15, "#c58aff", "bold", width=185, fit=True)
-    label(1444, 98, "Найдём вместе!", 15, "#c58aff", "bold", width=185, fit=True)
+          18, "#e4eaff", width=980, fit=True)
+    dot(1372, 42, 5, "#20e66c")
+    label(1386, 30, "Онлайн", 13, "#49ed82", "bold", width=70, fit=True)
+    rule(1464, 27, 1464, 57, "#543a87", 1)
+    rule(1494, 42, 1513, 42, "#a78aff", 2)
+    rounded(1544, 32, 1562, 50, "", "#a78aff", 2, 2)
+    rule(1590, 33, 1608, 51, "#a78aff", 2)
+    rule(1608, 33, 1590, 51, "#a78aff", 2)
+    label(1445, 82, "Спрос есть.", 18, "#bd6cff", "bold", width=190, fit=True)
+    label(1445, 109, "Найдём вместе!", 18, "#bd6cff", "bold", width=190, fit=True)
+    rule(1464, 143, 1606, 143, "#7432bc", 2)
 
-    # Five metric cards: retain hierarchy, never fabricate connected statistics.
+    # Five neon KPI cards. Values remain empty until real sources connect.
     metrics = (
-        ("01", "Заявки", "—", "Ожидают подключения источников", "#a65cff"),
-        ("02", "Специалисты", "—", "Ожидают подключения источников", "#29bfff"),
-        ("03", "Новые задачи", "—", "Ожидают подключения источников", "#d15cff"),
-        ("04", "Анализ спроса", "—", "Рассчитывается после поиска", "#1eddb8"),
-        ("05", "Релевантность", "—", "Рассчитывается по запросу", "#f4bd55"),
+        ("♙", "Заявки", "—", "Люди ищут услуги и решения", "#9b42ff"),
+        ("▣", "Специалисты", "—", "Предлагают услуги и ищут заказы", "#18bfff"),
+        ("◎", "Новые задачи", "—", "Разовые задания и подработка", "#b34bff"),
+        ("▥", "Анализ спроса", "—", "Актуальные данные из источников", "#13dfb6"),
+        ("☆", "Релевантность", "—", "Точные результаты по запросам", "#ffbf43"),
     )
-    for index, (number, title, value, description, accent) in enumerate(metrics):
+    for index, (icon, title, value, description, accent) in enumerate(metrics):
         left = 300 + index * 264
-        right = left + 246
-        rounded(left, 145, right, 315, "#0b1632", "#263c70", 16, 1)
-        rounded(left + 1, 146, right - 1, 150, accent, accent, 2, 1)
-        label(left + 17, 165, number, 9, accent, "bold")
-        label(left + 17, 188, title, 13, "#e9efff", "bold", width=210, fit=True)
-        label(left + 17, 222, value, 31, "#ffffff", "bold")
-        rule(left + 17, 269, right - 17, 269, "#20335f")
-        label(left + 17, 281, description, 8, "#94a8d1", width=210)
+        right = left + 245
+        rounded(left - 2, 168, right + 2, 347, "#080f27", accent, 20, 2)
+        rounded(left, 170, right, 345, "#0a1531", accent, 18, 1)
+        dot(left + 43, 217, 24, accent)
+        label(left + 43, 194, icon, 31, "#ffffff", "bold", "n")
+        label(left + 97, 198, title, 14, "#edf3ff", "bold", width=130, fit=True)
+        label(left + 97, 235, value, 27, "#ffffff", "bold")
+        rule(left + 20, 283, right - 20, 283, "#263d76")
+        label(left + 23, 295, description, 10, "#a9b9df",
+              width=200, justify="center")
 
-    # Smart search panel. Keep the original hit-box coordinates.
-    rounded(300, 337, 1345, 556, "#091632", "#263f79", 17, 1)
-    label(322, 353, "⌕", 28, "#36cfff", "bold")
-    label(366, 359, "Умный поиск", 19, "#f1f4ff", "bold")
-    label(1138, 367, "РАСШИРЕННЫЙ ПОИСК  ⌄", 9, "#54baff", "bold", width=190, fit=True)
+    # Smart search panel with a bright blue perimeter.
+    rounded(297, 370, 1348, 559, "", "#185fbd", 22, 3)
+    rounded(300, 373, 1345, 556, "#091633", "#3866bd", 20, 1)
+    label(323, 388, "⌕", 35, "#20caff", "bold")
+    label(373, 394, "Умный поиск", 23, "#f2f5ff", "bold")
+    label(1137, 402, "Расширенный поиск  ⌄", 15, "#38aaff",
+          width=190, fit=True)
     rounded(320, 435, 1165, 488, "#071129", "#405a91", 12, 1)
     entry = getattr(self, "exchange_entry", None)
     if entry is not None:
@@ -205,8 +257,8 @@ def _exchange_redraw(self, _event=None):
         label(left + 10, 525, symbol, 11, "#a6b9e8", "bold")
         label(left + 31, 526, value + "  ⌄", 9, "#dce6fb", width=right-left-42, fit=True)
 
-    # Source selectors with brand-specific native wordmarks.
-    label(303, 575, "ИСТОЧНИКИ ПОИСКА", 9, "#8da2d1", "bold")
+    # Source selectors with brand-specific wordmarks and a neon Avito selection.
+    label(307, 572, "◎  Источники поиска", 17, "#f0f4ff", "bold")
     sources = (
         ("VK", "vk", "#2788ff"),
         ("Telegram", "➤", "#31bdf5"),
@@ -219,12 +271,11 @@ def _exchange_redraw(self, _event=None):
     for index, (name, wordmark, accent) in enumerate(sources):
         left = 301 + index * 147
         active = name in selected
-        rounded(left, 602, left + 132, 688,
-                "#17183b" if active else "#09142e",
-                "#a94cff" if active else "#273b6d",
-                14, 2 if active else 1)
         if active:
-            rounded(left + 8, 610, left + 124, 614, accent, accent, 2, 1)
+            rounded(left - 3, 607, left + 135, 694, "#0b1233", "#d344ff", 18, 3)
+            rounded(left, 610, left + 132, 691, "#17183b", "#2488ec", 16, 1)
+        else:
+            rounded(left, 610, left + 132, 691, "#09132e", "#293c78", 16, 1)
         if name == "VK":
             dot(left + 66, 632, 15, "#1677e8")
             label(left + 66, 621, "vk", 14, "#ffffff", "bold", "n")
@@ -244,36 +295,37 @@ def _exchange_redraw(self, _event=None):
         label(left + 66, 674, "ВЫБРАН" if active else "НЕ ПОДКЛЮЧЁН",
               6, accent if active else "#7185b1", "bold", "n", width=116, fit=True)
 
-    rounded(1185, 602, 1343, 688, "#09142e", "#293e70", 14, 1)
-    label(1264, 615, "+", 23, "#b9caff", "bold", "n")
-    label(1264, 653, "Ещё источники", 8, "#c6d4f1", "bold", "n")
-    label(1264, 670, "скоро", 7, "#8298c4", "normal", "n")
+    rounded(1185, 610, 1343, 691, "#09132e", "#344d91", 16, 1)
+    label(1264, 625, "+", 30, "#a8c4ff", "bold", "n")
+    label(1264, 665, "Ещё 5", 13, "#eef2ff", "bold", "n")
+    label(1264, 680, "скоро", 8, "#8298c4", "normal", "n")
 
-    # Right-hand category panel with real checkbox visuals, not a screenshot.
-    rounded(1360, 337, 1618, 702, "#0b1632", "#55358e", 17, 1)
-    label(1382, 356, "ЧТО ИЩЕМ", 10, "#d5c4ff", "bold")
-    label(1382, 377, "Типы объявлений", 14, "#f0f3ff", "bold")
-    rule(1382, 405, 1596, 405, "#26375f")
+    # Right-hand discovery panel, aligned with the search module.
+    rounded(1360, 373, 1618, 702, "#0b1430", "#8e39e7", 18, 1)
+    label(1384, 393, "▥  Что можно найти?", 17, "#f2f5ff", "bold",
+          width=210, fit=True)
     categories = (
         "Заявки на услуги и ремонт",
         "Разовые задачи и подработка",
-        "Вакансии и работа",
+        "Вакансии и работу",
         "Товары и предложения",
-        "Поиск помощи и специалистов",
+        "Потребность в помощи и специалистах",
     )
     selected_categories = getattr(self, "exchange_categories_selected", set())
     for index, category in enumerate(categories):
-        top = 423 + index * 43
+        top = 438 + index * 39
         checked = category in selected_categories
-        rounded(1383, top + 3, 1400, top + 20,
-                "#102b43" if checked else "#09172f",
-                "#24c9e7" if checked else "#405078", 4, 1)
+        dot(1397, top + 9, 9, "#0c4c4a" if checked else "#10213d",
+            "#13e3b2" if checked else "#405078")
         if checked:
-            label(1391, top + 2, "✓", 10, "#43e7cb", "bold", "n")
-        label(1412, top + 2, category, 8, "#d6e1f8", "normal",
-              width=180, fit=True)
-    rounded(1381, 653, 1597, 685, "#211443", "#7340a9", 9, 1)
-    label(1393, 661, "Источники не подключены", 8, "#d7b7ff", "bold", width=190, fit=True)
+            label(1397, top + 1, "✓", 12, "#13e3b2", "bold", "n")
+        label(1417, top + 1, category, 11, "#dce6ff",
+              width=182, fit=True)
+    rounded(1372, 631, 1607, 688, "#21104d", "#9c35ff", 12, 1)
+    label(1390, 643, "ϟ", 28, "#d98cff", "bold")
+    label(1425, 640, "Vkus анализирует", 12, "#d98cff", "bold")
+    label(1425, 662, "после подключения источников", 9,
+          "#e2d9ff", width=170, fit=True)
 
     # Lower information area — honest empty states, no invented leads or map stats.
     rounded(300, 716, 855, 891, "#09152f", "#2b416f", 15, 1)
