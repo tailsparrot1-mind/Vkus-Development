@@ -344,13 +344,6 @@ class VkusApp:
                     return
             except tk.TclError:
                 pass
-        if Image is None or ImageTk is None:
-            messagebox.showerror('Vkus — Биржа', 'Для отображения интерфейса необходим Pillow.')
-            return
-        reference = Path(__file__).resolve().parent / 'assets' / 'birzha_reference.png'
-        if not reference.exists():
-            messagebox.showerror('Vkus — Биржа', 'Не найден утверждённый визуал: ' + str(reference))
-            return
         win = tk.Toplevel(self.root)
         self.exchange_window = win
         win.title('Vkus — Биржа спроса и предложений')
@@ -370,7 +363,6 @@ class VkusApp:
         canvas = tk.Canvas(win, bg='#020516', highlightthickness=0, bd=0)
         canvas.pack(fill='both', expand=True)
         self.exchange_canvas = canvas
-        self.exchange_reference = Image.open(reference).convert('RGB')
         self.exchange_sources_selected = set()
         self.exchange_categories_selected = set()
         self.exchange_city = 'Оренбург'
