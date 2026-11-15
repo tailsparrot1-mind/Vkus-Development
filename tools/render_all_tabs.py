@@ -69,9 +69,25 @@ def main():
             page.screenshot(path=str(out / "05_License.png"), full_page=True)
             browser.close()
 
-        # The About item is a modal information action rather than a persistent page;
-        # verify it is wired without blocking the automated tab capture.
-        assert callable(app._show_about)
+        # About is a real modal action. Capture its actual Tk dialog while it is open,
+        # then close it automatically so CI can continue.
+        def capture_about_dialog():
+            for child in app.root.winfo_children():
+                if child.winfo_class() == "Toplevel":
+                    try:
+                        x, y = child.winfo_rootx(), child.winfo_rooty()
+                        w, h = child.winfo_width(), child.winfo_height()
+                        ImageGrab.grab(bbox=(x, y, x+w, y+h)).convert("RGB").save(
+                            out / "06_About.png", "PNG")
+                        child.destroy()
+                        return
+                    except Exception:
+                        pass
+        app.root.after(700, capture_about_dialog)
+        app._show_about()
+        pump(app.root, 0.3)
+        if not (out / "06_About.png").exists():
+            raise RuntimeError("About dialog was not captured")
         print("CAPTURED_TABS=" + ",".join(p.name for p in sorted(out.glob("*.png"))))
     finally:
         try: app.close()
