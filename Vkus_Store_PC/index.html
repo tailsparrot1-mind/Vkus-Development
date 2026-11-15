@@ -8,16 +8,15 @@
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;color:#f8f7ff}body{min-height:100vh;background:radial-gradient(ellipse at 50% 0%,#29204d 0%,#121124 37%,#090910 76%);display:grid;place-items:center;padding:42px 24px;overflow-x:hidden}
 body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 18% 24%,rgba(105,76,255,.16),transparent 30%),radial-gradient(ellipse at 82% 65%,rgba(49,100,255,.12),transparent 35%)}
 .screen{width:min(1050px,100%);min-height:650px;position:relative;overflow:hidden;border-radius:34px;background:#0b0b13;border:1px solid rgba(188,163,255,.2);box-shadow:0 34px 100px rgba(0,0,0,.62),0 0 90px rgba(113,80,255,.2),inset 0 1px 0 rgba(255,255,255,.08);display:grid;grid-template-rows:260px 1fr}
-.art{position:relative;overflow:hidden;background:linear-gradient(90deg,rgba(13,7,38,.58) 0%,rgba(20,10,57,.14) 48%,rgba(9,17,55,.24) 100%),linear-gradient(0deg,rgba(10,8,27,.42),transparent 45%),url("https://raw.githubusercontent.com/tailsparrot1-mind/Vkus-Development/VKUS/Vkus_3.17_NATIVE_EXCHANGE/assets/neon_lion_desktop.png") center 38%/cover no-repeat,#25134f}
-.art:before{content:"";position:absolute;inset:-30% -10% -30% 10%;background:radial-gradient(ellipse at 17% 54%,rgba(229,125,255,.96),transparent 36%),radial-gradient(ellipse at 53% 48%,rgba(116,133,255,.94),transparent 37%),radial-gradient(ellipse at 83% 20%,rgba(59,224,255,.66),transparent 35%);filter:blur(25px);opacity:.95}
-.art:after{content:"";position:absolute;width:570px;height:390px;left:-95px;top:-215px;border-radius:46% 54% 61% 39%/48% 43% 57% 52%;border:1px solid rgba(205,180,255,.25);transform:rotate(-24deg);box-shadow:0 0 0 22px rgba(178,142,255,.035),0 0 0 52px rgba(178,142,255,.03),0 0 0 88px rgba(178,142,255,.025),inset 0 0 80px rgba(150,103,255,.28)}
+.art{position:relative;overflow:hidden;background:linear-gradient(90deg,rgba(9,7,25,.12),rgba(9,7,25,.02) 55%,rgba(9,7,25,.12)),url("https://media.canva.com/v2/image-resize/format:PNG/height:112/quality:100/uri:ifs%3A%2F%2FM%2Fd82431a8-e06e-4c9c-8864-ee2fe5585800/watermark:F/width:200?csig=AAAAAAAAAAAAAAAAAAAAABd5ivz6WU92ENyOOUMqR08ct5Q8dZjvnI7RFqF6wd-I&exp=1794723053&osig=AAAAAAAAAAAAAAAAAAAAAOoeZUHTbpDLVK7qkHYXcAJ9mVmPl3hzU0xBCZzQbU_5&signer=media-rpc&token=AAIAAU0AJGQ4MjQzMWE4LWUwNmUtNGM5Yy04ODY0LWVlMmZlNTU4NTgwMAAAAAABod3UfchC3Zej5TlBKQvKtKWdKnmZIF1qAeCkbhG8HCvu0PDSZQ&x-canva-quality=thumbnail") center center/cover no-repeat,#17102f}
+.art:before,.art:after{display:none}
 .wave{display:none;position:absolute;left:-7%;top:-58%;width:66%;height:180%;border-radius:48%;transform:rotate(-24deg);background:linear-gradient(125deg,rgba(36,24,89,.2),rgba(153,89,255,.65) 32%,rgba(61,98,255,.25) 55%,transparent 72%);filter:blur(2px);opacity:.8}
 .orb{display:none;position:absolute;right:12%;top:5px;width:270px;height:270px;border-radius:50%;background:radial-gradient(circle at 33% 27%,rgba(230,213,255,.9),rgba(165,105,255,.8) 15%,rgba(88,70,226,.55) 39%,rgba(39,52,137,.2) 62%,transparent 72%);filter:blur(3px);box-shadow:0 0 80px rgba(129,87,255,.45)}
 .art-mark{display:none;position:absolute;right:13%;top:24px;font-size:154px;font-weight:900;letter-spacing:-18px;color:rgba(255,255,255,.14);text-shadow:0 0 65px rgba(220,204,255,.55);z-index:1;transform:rotate(-8deg)}
-.brand-word{position:absolute;left:48px;top:78px;z-index:2;font-size:76px;line-height:1;font-weight:900;letter-spacing:-5px;background:linear-gradient(100deg,#fff 0%,#f4d9ff 28%,#b8c2ff 64%,#9df2ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;text-shadow:0 5px 18px rgba(20,8,55,.72);filter:drop-shadow(0 0 20px rgba(210,185,255,.62))}
-.brand-caption{position:absolute;left:54px;top:164px;z-index:2;font-size:10px;font-weight:800;letter-spacing:3.3px;color:rgba(255,255,255,.78)}
+.brand-word{display:none}
+.brand-caption{display:none}
 .art-glow{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(20,9,57,.12),transparent 58%,rgba(18,34,100,.16));pointer-events:none}
-.topline{position:absolute;top:25px;left:38px;display:flex;align-items:center;gap:10px;z-index:2;color:rgba(255,255,255,.84);font-size:10px;letter-spacing:2.2px;font-weight:800}.logo{width:27px;height:27px;border-radius:9px;background:linear-gradient(135deg,#d6baff,#737aff 60%,#62d8ff);display:grid;place-items:center;color:#fff;font-size:16px;font-weight:800;letter-spacing:-2px;padding-right:2px;box-shadow:0 0 22px rgba(151,116,255,.5)}
+.topline{display:none}.logo{display:none}
 .content{position:relative;padding:30px 48px 38px;background:linear-gradient(180deg,rgba(20,18,37,.97),rgba(10,11,21,.99) 100%)}
 .main-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:start}
 h1{font-size:34px;letter-spacing:-1.6px;line-height:1.12;margin:0 0 10px;font-weight:800}.subtitle{margin:0 0 25px;color:#a7a5b9;font-size:13px;line-height:1.6;max-width:340px}
@@ -38,7 +37,7 @@ button:focus-visible{outline:2px solid #cdbdff;outline-offset:3px}
 </head>
 <body>
 <main class="screen">
-<section class="art" aria-hidden="true"><div class="wave"></div><div class="orb"></div><div class="art-mark">V</div><div class="art-glow"></div><div class="topline"><span class="logo">V</span><span>LICENSE CENTER</span></div><div class="brand-word">ВКУС</div><div class="brand-caption">ПОИСК ВОЗМОЖНОСТЕЙ · РОСТ БИЗНЕСА</div></section>
+<section class="art" aria-hidden="true"><div class="wave"></div><div class="orb"></div><div class="art-mark">V</div><div class="art-glow"></div></section>
 <section class="content">
 <div class="main-grid">
 <div>
