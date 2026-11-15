@@ -26,9 +26,16 @@ jobs:
       - name: Compile all Python modules
         run: .venv/bin/python -m compileall -q Vkus_3.17_NATIVE_EXCHANGE
 
+      - name: Bundle the Vkus web logo for offline store display
+        run: |
+          curl -fL --retry 3 --retry-delay 2 \
+            "https://raw.githubusercontent.com/tailsparrot1-mind/Vkus-Development/main/F12AA4EB-C1A5-4F4B-81B8-1610092D33B5.png" \
+            -o Vkus_3.17_NATIVE_EXCHANGE/store/logo.png
+
       - name: Validate license integration
         run: |
           test -f Vkus_3.17_NATIVE_EXCHANGE/store/index.html
+          test -f Vkus_3.17_NATIVE_EXCHANGE/store/logo.png
           grep -q "_open_license" Vkus_3.17_NATIVE_EXCHANGE/vkus/app.py
           grep -q "ЛИЦЕНЗИЯ:" Vkus_3.17_NATIVE_EXCHANGE/vkus/app.py
           grep -q "Статус лицензии" Vkus_3.17_NATIVE_EXCHANGE/store/index.html
