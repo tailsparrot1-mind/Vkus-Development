@@ -253,6 +253,12 @@ class VkusApp:
         self.auth_header = tk.Label(right, text='●  Сессия не проверена', bg='#07162f',
                                     fg=MUTED, font=('TkDefaultFont', 9))
         self.auth_header.pack(side='left')
+        license_state = str(self.settings.get('license_status', 'Не активирована'))
+        license_color = GREEN if license_state.lower() in ('активна', 'active') else RED
+        self.license_header = tk.Label(
+            right, text=f'ЛИЦЕНЗИЯ: {license_state.upper()}',
+            bg='#07162f', fg=license_color, font=('TkDefaultFont', 8, 'bold'))
+        self.license_header.pack(side='left', padx=(12, 0))
 
     def _sidebar(self, parent):
         side = tk.Frame(parent, bg='#061226', width=190, highlightthickness=0)
@@ -263,6 +269,7 @@ class VkusApp:
             ('⌕', 'Поиск', self._show_search),
             ('▤', 'Сообщения', self._show_messages),
             ('⇄', 'Биржа', self._show_exchange),
+            ('◈', 'Лицензия', self._open_license),
             ('ⓘ', 'О программе', self._show_about),
         ]
         self.nav_buttons = {}
@@ -277,6 +284,13 @@ class VkusApp:
             self.nav_buttons[label] = b
         spacer = tk.Frame(side, bg='#061226')
         spacer.pack(fill='both', expand=True)
+        license_state = str(self.settings.get('license_status', 'Не активирована'))
+        license_color = GREEN if license_state.lower() in ('активна', 'active') else RED
+        self.license_sidebar_status = tk.Label(
+            side, text=f'ЛИЦЕНЗИЯ  •  {license_state.upper()}',
+            bg='#0a1b36', fg=license_color, justify='left',
+            anchor='w', font=('TkDefaultFont', 7, 'bold'), padx=10, pady=8)
+        self.license_sidebar_status.pack(fill='x', padx=8, pady=(4, 8))
         tk.Label(side, text='Vkus —\nнайдите клиентов\nтам, где они уже есть',
                  bg='#061226', fg=MUTED, justify='left',
                  font=('TkDefaultFont', 8)).pack(anchor='w', padx=14, pady=10)
@@ -630,7 +644,7 @@ class VkusApp:
             parent=self.exchange_window)
 
     def _show_about(self):
-        messagebox.showinfo('Vkus', 'Vkus — универсальный локальный инструмент поиска клиентов в VK.\n\nСборка 3.1: Kali Linux + Firefox + Selenium. Реальный поиск VK и реальные сообщения без демо-данных.')
+        messagebox.showinfo('Vkus', 'Vkus — универсальный инструмент поиска клиентов.\n\nСборка 3.18: Kali Linux + Firefox + Selenium. Локальный статус лицензии отображается в шапке и боковой панели. Для просмотра тарифов нажмите «Лицензия».')
 
     def _main_panel(self, parent):
         left = tk.Frame(parent, bg=PANEL, highlightthickness=0)
@@ -1592,7 +1606,7 @@ class VkusApp:
         f = tk.Frame(self.root, bg='#07162f', height=27, highlightthickness=0)
         f.pack(fill='x')
         f.pack_propagate(False)
-        tk.Label(f, text='Vkus  |  Версия 3.1  |  Kali Linux', bg='#07162f', fg=MUTED,
+        tk.Label(f, text='Vkus  |  Версия 3.18  |  Kali Linux', bg='#07162f', fg=MUTED,
                  font=('TkDefaultFont', 7)).pack(side='left', padx=14)
         tk.Label(f, text='УНИВЕРСАЛЬНЫЙ ИНСТРУМЕНТ', bg='#07162f', fg=MUTED,
                  font=('TkDefaultFont', 7)).pack(side='right', padx=14)
@@ -1694,6 +1708,24 @@ class VkusApp:
     def _open_url(self, url):
         import webbrowser
         webbrowser.open(url)
+
+    def _open_license(self):
+        """Open the bundled Vkus license store in the system browser."""
+        import webbrowser
+        store_page = Path(__file__).resolve().parent.parent / 'store' / 'index.html'
+        if not store_page.is_file():
+            messagebox.showerror(
+                'Vkus — лицензия',
+                'Файл магазина лицензий не найден.\nПереустановите сборку из полного архива.',
+                parent=self.root)
+            return
+        try:
+            opened = webbrowser.open_new_tab(store_page.resolve().as_uri())
+            if not opened:
+                raise RuntimeError('Системный браузер не подтвердил открытие страницы')
+            self.log_lines.append(f'Открыт магазин лицензий: {store_page}')
+        except Exception as exc:
+            messagebox.showerror('Vkus — лицензия', f'Не удалось открыть страницу лицензий:\n{exc}', parent=self.root)
 
     def close(self):
         try:
