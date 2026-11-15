@@ -64,6 +64,7 @@ jobs:
           name: Vkus-3.18-License-build
           path: |
             artifacts/Vkus_3.17_Exchange.png
+            artifacts/Vkus_3.18_Full_Launch.png
             artifacts/Vkus_3.18_LICENSE_STORE.zip
           if-no-files-found: error
           retention-days: 14
