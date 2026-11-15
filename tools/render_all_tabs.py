@@ -60,22 +60,14 @@ def main():
 
         # Capture the real license store page using the app's bundled HTML file.
         # Firefox ESR is installed in CI and opens the same local page the button uses.
-        import subprocess
+        from playwright.sync_api import sync_playwright
         store = ROOT / "store" / "index.html"
-        firefox = subprocess.Popen(["wkhtmltoimage", "--width", "1600", "--height", "1000",
-                                    store.as_uri(), str(out / "05_License.png")],
-                                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        try:
-            for _ in range(50):
-                if (out / "05_License.png").exists() and (out / "05_License.png").stat().st_size > 30_000:
-                    break
-                time.sleep(0.2)
-        finally:
-            firefox.terminate()
-            try: firefox.wait(timeout=3)
-            except Exception: firefox.kill()
-        if not (out / "05_License.png").exists():
-            raise RuntimeError("Firefox did not render the bundled license store")
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            page = browser.new_page(viewport={"width": 1600, "height": 1000}, device_scale_factor=1)
+            page.goto(store.as_uri(), wait_until="networkidle")
+            page.screenshot(path=str(out / "05_License.png"), full_page=True)
+            browser.close()
 
         def close_about():
             save_screen(out / "06_About.png")
