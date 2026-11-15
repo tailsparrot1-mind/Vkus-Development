@@ -28,6 +28,7 @@ h1{font-size:34px;letter-spacing:-1.6px;line-height:1.12;margin:0 0 10px;font-we
 .radio{width:16px;height:16px;border:1px solid #737184;border-radius:50%;display:grid;place-items:center}.plan[aria-checked=true] .radio{border-color:#d4c7ff}.plan[aria-checked=true] .radio:after{content:"";width:8px;height:8px;border-radius:50%;background:#c7b4ff;box-shadow:0 0 8px #a88cff}
 .plan-name{font-size:11px;letter-spacing:1.4px;font-weight:800}.plan-sub{font-size:10px;color:#9997ac;margin-top:4px}.price{font-size:15px;font-weight:700;white-space:nowrap;letter-spacing:-.3px}
 .extra{margin-top:12px;color:#a5a2b7;font-size:10px;line-height:1.65;min-height:34px}.extra b{color:#d7caff;font-weight:600}
+.license-state{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;padding:11px 14px;border:1px solid rgba(255,91,119,.28);border-radius:12px;background:rgba(255,69,105,.08);color:#f0dce4;font-size:11px}.license-state .state-dot{width:8px;height:8px;border-radius:50%;background:#ff607c;box-shadow:0 0 12px rgba(255,96,124,.65)}.license-state small{color:#aaa6bb;margin-left:auto;font-size:10px}
 .bottom{margin-top:24px;display:grid;grid-template-columns:1fr minmax(260px,360px);gap:28px;align-items:center}.summary{display:flex;align-items:center;gap:12px;color:#9290a5;font-size:11px}.summary strong{font-size:20px;color:#f5f2ff;letter-spacing:-.5px}.cta{height:52px;border:0;border-radius:13px;background:linear-gradient(100deg,#8e5df5,#6269f3 53%,#438ff0);box-shadow:0 8px 25px rgba(93,88,238,.3),inset 0 1px rgba(255,255,255,.28);color:white;font-size:13px;font-weight:800;cursor:pointer;transition:.18s}.cta:hover{filter:brightness(1.12);transform:translateY(-1px);box-shadow:0 11px 32px rgba(93,88,238,.4)}.fineprint{text-align:center;color:#747184;font-size:9px;margin-top:14px;letter-spacing:.15px}
 button:focus-visible{outline:2px solid #cdbdff;outline-offset:3px}
 .modal-bg{position:fixed;inset:0;background:rgba(3,3,10,.78);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:20px;z-index:5}.modal-bg.open{display:flex}.modal{width:min(390px,100%);padding:28px;border-radius:22px;background:#171522;border:1px solid rgba(190,170,255,.3);box-shadow:0 25px 80px #000;text-align:center}.modal h2{font-size:19px;margin:0 0 10px}.modal p{font-size:12px;color:#aaa6bb;line-height:1.7;margin:0}.modal button{margin-top:20px;border:0;border-radius:10px;padding:10px 22px;color:#fff;background:linear-gradient(100deg,#8e5df5,#438ff0);font-weight:700;cursor:pointer}
@@ -60,6 +61,7 @@ body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;back
 <main class="screen">
 <section class="art" aria-hidden="true"><div class="wave"></div><div class="orb"></div><div class="art-mark">V</div><div class="art-glow"></div></section>
 <section class="content">
+<div class="license-state" role="status"><span class="state-dot"></span><span><b>Статус лицензии:</b> Не активирована</span><small>Выберите тариф, чтобы ознакомиться с условиями подключения.</small></div>
 <div class="main-grid">
 <div>
 <h1>Откройте возможности Vkus</h1>
@@ -82,12 +84,12 @@ body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;back
 </div>
 <div class="bottom">
 <div class="summary"><span>Стоимость лицензии</span><strong id="total">174 000 ₽</strong></div>
-<button class="cta" id="continue" type="button">Продолжить</button>
+<button class="cta" id="continue" type="button">Запросить подключение</button>
 </div>
-<div class="fineprint">После подтверждения оплаты можно перейти к подключению и запуску лицензии.</div>
+<div class="fineprint">Лицензия активируется после согласования и отдельной проверки. Статус в приложении не подменяет серверную проверку.</div>
 </section>
 </main>
-<div class="modal-bg" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal"><h2 id="modal-title">Оплата пока недоступна</h2><p>Robokassa ещё не подключена. Заказ не создан, списание не выполняется.</p><button id="close" type="button">Понятно</button></div></div>
+<div class="modal-bg" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal"><h2 id="modal-title">Подключение лицензии</h2><p>Вы выбрали тариф. Для активации лицензии необходимо согласовать подключение с разработчиком. Онлайн-оплата и автоматическая проверка ключа пока не подключены; заказ и списание не выполняются.</p><button id="close" type="button">Понятно</button></div></div>
 <script>
 const data={base:{price:"79 900 ₽",extra:"В лицензии BASE доступна площадка <b>ВКонтакте</b>."},standard:{price:"174 000 ₽",extra:"Включены <b>VK, Telegram и Одноклассники</b>."},premium:{price:"238 000 ₽",extra:"Включены <b>VK, Telegram, Одноклассники, Google, Avito и Yahoo</b>. Дополнительно: фильтрация по поисковым запросам и помощь с первыми 3 заявками."}};
 let selected="standard";const cards=[...document.querySelectorAll(".plan")];
