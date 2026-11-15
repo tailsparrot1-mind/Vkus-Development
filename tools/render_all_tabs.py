@@ -34,9 +34,7 @@ def main():
         # The test environment skips waiting for the cinematic splash but builds
         # the exact same application UI through its normal completion callback.
         if getattr(app, "splash", None) is not None:
-            try: app.splash.stop()
-            except Exception: pass
-        app._build_ui()
+            app.splash.finish()
         pump(app.root, 1.0)
 
         tabs = [
@@ -64,8 +62,8 @@ def main():
         # Firefox ESR is installed in CI and opens the same local page the button uses.
         import subprocess
         store = ROOT / "store" / "index.html"
-        firefox = subprocess.Popen(["firefox", "--headless", "--width", "1600", "--height", "1000",
-                                    "--screenshot", str(out / "05_License.png"), store.as_uri()],
+        firefox = subprocess.Popen(["wkhtmltoimage", "--width", "1600", "--height", "1000",
+                                    store.as_uri(), str(out / "05_License.png")],
                                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         try:
             for _ in range(50):
@@ -79,14 +77,15 @@ def main():
         if not (out / "05_License.png").exists():
             raise RuntimeError("Firefox did not render the bundled license store")
 
+        def close_about():
+            save_screen(out / "06_About.png")
+            for child in app.root.winfo_children():
+                if child.winfo_class() == "Toplevel":
+                    try: child.destroy()
+                    except Exception: pass
+        app.root.after(500, close_about)
         app._show_about()
-        pump(app.root, 0.5)
-        # About is a modal message box; grab it while it is visible, then close it.
-        save_screen(out / "06_About.png")
-        for child in app.root.winfo_children():
-            if child.winfo_class() == "Toplevel":
-                try: child.destroy()
-                except Exception: pass
+        pump(app.root, 0.8)
         print("CAPTURED_TABS=" + ",".join(p.name for p in sorted(out.glob("*.png"))))
     finally:
         try: app.close()
