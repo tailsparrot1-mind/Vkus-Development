@@ -26,21 +26,29 @@ jobs:
       - name: Compile all Python modules
         run: .venv/bin/python -m compileall -q Vkus_3.17_NATIVE_EXCHANGE
 
+      - name: Validate license integration
+        run: |
+          test -f Vkus_3.17_NATIVE_EXCHANGE/store/index.html
+          grep -q "_open_license" Vkus_3.17_NATIVE_EXCHANGE/vkus/app.py
+          grep -q "ЛИЦЕНЗИЯ:" Vkus_3.17_NATIVE_EXCHANGE/vkus/app.py
+          grep -q "Статус лицензии" Vkus_3.17_NATIVE_EXCHANGE/store/index.html
+          .venv/bin/python -m compileall -q Vkus_3.17_NATIVE_EXCHANGE
+
       - name: Render the actual Tkinter Exchange window
         run: |
           mkdir -p artifacts
           xvfb-run -a -s "-screen 0 1920x1080x24" .venv/bin/python tools/render_exchange_preview.py --output artifacts/Vkus_3.17_Exchange.png
 
-      - name: Package runnable Vkus source archive
+      - name: Package runnable Vkus 3.18 source archive
         run: |
           cd Vkus_3.17_NATIVE_EXCHANGE
           chmod +x run.sh install.sh
-          find . -type f ! -path '*/__pycache__/*' ! -name '*.pyc' -print | zip -q ../artifacts/Vkus_3.17_NATIVE_EXCHANGE.zip -@
+          find . -type f ! -path '*/__pycache__/*' ! -name '*.pyc' -print | zip -q ../artifacts/Vkus_3.18_LICENSE_STORE.zip -@
 
       - name: Upload screenshot and runnable source archive
         uses: actions/upload-artifact@v4
         with:
-          name: Vkus-3.17-Exchange-build
+          name: Vkus-3.18-License-build
           path: |
             artifacts/Vkus_3.17_Exchange.png
             artifacts/Vkus_3.17_NATIVE_EXCHANGE.zip
