@@ -42,6 +42,18 @@ body:before{display:none!important;content:none!important}
 .art{display:none!important;background:none!important}
 .content{align-self:end;width:100%;background:linear-gradient(180deg,rgba(8,7,17,.72),rgba(8,7,17,.94));backdrop-filter:blur(8px);}
 @media(max-width:760px){.screen{min-height:100vh;grid-template-rows:1fr}.content{padding:25px 22px 27px}}
+
+/* FINAL OVERRIDE: use the uploaded "лого веб" image as the ONLY page background */
+html,body{width:100%;min-height:100%;margin:0}
+html{background:#070611}
+body{position:relative;isolation:isolate;min-height:100vh;padding:0;display:grid;place-items:center;overflow-x:hidden;background:transparent!important}
+body:before{display:none!important;content:none!important}
+body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:url("https://raw.githubusercontent.com/tailsparrot1-mind/Vkus-Development/main/F12AA4EB-C1A5-4F4B-81B8-1610092D33B5.png");background-position:center center;background-size:100% 100%;background-repeat:no-repeat}
+.screen{position:relative;z-index:1;width:100%;min-height:100vh;border:0;border-radius:0;box-shadow:none;background:transparent!important;grid-template-rows:1fr;overflow:visible}
+.art{display:none!important;background:none!important}
+.wave,.orb,.art-mark,.art-glow,.brand-word,.brand-caption,.brand-logo,.topline,.logo{display:none!important}
+.content{align-self:end;width:100%;background:rgba(8,7,17,.78)!important;backdrop-filter:blur(5px)}
+@media(max-width:760px){.screen{min-height:100vh;grid-template-rows:1fr}.content{padding:25px 22px 27px}}
 </style>
 </head>
 <body>
