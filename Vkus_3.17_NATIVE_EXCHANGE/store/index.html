@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#08080f">
+<title>Vkus — выбор лицензии</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;color:#f8f7ff}body{min-height:100vh;background:radial-gradient(ellipse at 50% 0%,#29204d 0%,#121124 37%,#090910 76%);display:grid;place-items:center;padding:42px 24px;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 18% 24%,rgba(105,76,255,.16),transparent 30%),radial-gradient(ellipse at 82% 65%,rgba(49,100,255,.12),transparent 35%)}
+.screen{width:min(1050px,100%);min-height:650px;position:relative;overflow:hidden;border-radius:34px;background:#0b0b13;border:1px solid rgba(188,163,255,.2);box-shadow:0 34px 100px rgba(0,0,0,.62),0 0 90px rgba(113,80,255,.2),inset 0 1px 0 rgba(255,255,255,.08);display:grid;grid-template-rows:378px 1fr}
+.art{position:relative;overflow:hidden;background:#090912 url("https://raw.githubusercontent.com/tailsparrot1-mind/Vkus-Development/main/F12AA4EB-C1A5-4F4B-81B8-1610092D33B5.png") center center/100% 100% no-repeat}
+.art:before,.art:after{display:none}
+.wave{display:none;position:absolute;left:-7%;top:-58%;width:66%;height:180%;border-radius:48%;transform:rotate(-24deg);background:linear-gradient(125deg,rgba(36,24,89,.2),rgba(153,89,255,.65) 32%,rgba(61,98,255,.25) 55%,transparent 72%);filter:blur(2px);opacity:.8}
+.orb{display:none;position:absolute;right:12%;top:5px;width:270px;height:270px;border-radius:50%;background:radial-gradient(circle at 33% 27%,rgba(230,213,255,.9),rgba(165,105,255,.8) 15%,rgba(88,70,226,.55) 39%,rgba(39,52,137,.2) 62%,transparent 72%);filter:blur(3px);box-shadow:0 0 80px rgba(129,87,255,.45)}
+.art-mark{display:none;position:absolute;right:13%;top:24px;font-size:154px;font-weight:900;letter-spacing:-18px;color:rgba(255,255,255,.14);text-shadow:0 0 65px rgba(220,204,255,.55);z-index:1;transform:rotate(-8deg)}
+.brand-word{position:absolute;left:48px;top:76px;z-index:2;display:block;font-size:78px;line-height:1;font-weight:900;letter-spacing:-5px;color:#f5eaff;-webkit-text-fill-color:#f5eaff;text-shadow:0 0 8px rgba(245,220,255,.95),0 0 24px rgba(169,99,255,.95),0 0 52px rgba(89,117,255,.72);filter:drop-shadow(0 8px 18px rgba(0,0,0,.8))}
+.brand-logo{display:none}
+.brand-caption{position:absolute;left:54px;top:164px;z-index:2;display:block;font-size:10px;font-weight:800;letter-spacing:3px;color:rgba(242,230,255,.92);text-shadow:0 2px 10px #090615}
+.art-glow{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(8,7,20,.08),transparent 62%);pointer-events:none}
+.topline{display:none}.logo{display:none}
+.content{position:relative;padding:30px 48px 38px;background:linear-gradient(180deg,rgba(20,18,37,.97),rgba(10,11,21,.99) 100%)}
+.main-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:start}
+h1{font-size:34px;letter-spacing:-1.6px;line-height:1.12;margin:0 0 10px;font-weight:800}.subtitle{margin:0 0 25px;color:#a7a5b9;font-size:13px;line-height:1.6;max-width:340px}
+.perks{display:grid;gap:13px}.perk{display:flex;align-items:center;gap:12px;color:#d9d7e4;font-size:12px}.perk-icon{width:23px;height:23px;border-radius:50%;display:grid;place-items:center;color:#c2b3ff;background:rgba(143,111,255,.13);border:1px solid rgba(174,147,255,.22);font-size:12px;flex:none}
+.plan-area{padding-top:2px}.plan-label{font-size:10px;color:#88869e;letter-spacing:1.8px;font-weight:700;margin:0 0 12px 2px}
+.plans{display:grid;gap:8px}.plan{width:100%;min-height:62px;padding:11px 15px;border-radius:13px;border:1px solid rgba(255,255,255,.09);background:linear-gradient(110deg,rgba(255,255,255,.055),rgba(255,255,255,.025));display:grid;grid-template-columns:19px minmax(0,1fr) auto;gap:12px;align-items:center;color:#f4f2fb;text-align:left;cursor:pointer;transition:.18s ease}
+.plan:hover{background:rgba(255,255,255,.09);border-color:rgba(190,174,255,.35)}.plan[aria-checked=true]{background:linear-gradient(105deg,rgba(143,110,255,.2),rgba(77,119,255,.13));border-color:rgba(200,185,255,.8);box-shadow:0 0 22px rgba(117,91,255,.14),inset 0 0 0 1px rgba(198,183,255,.1)}
+.radio{width:16px;height:16px;border:1px solid #737184;border-radius:50%;display:grid;place-items:center}.plan[aria-checked=true] .radio{border-color:#d4c7ff}.plan[aria-checked=true] .radio:after{content:"";width:8px;height:8px;border-radius:50%;background:#c7b4ff;box-shadow:0 0 8px #a88cff}
+.plan-name{font-size:11px;letter-spacing:1.4px;font-weight:800}.plan-sub{font-size:10px;color:#9997ac;margin-top:4px}.price{font-size:15px;font-weight:700;white-space:nowrap;letter-spacing:-.3px}
+.extra{margin-top:12px;color:#a5a2b7;font-size:10px;line-height:1.65;min-height:34px}.extra b{color:#d7caff;font-weight:600}
+.license-state{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;padding:11px 14px;border:1px solid rgba(255,91,119,.28);border-radius:12px;background:rgba(255,69,105,.08);color:#f0dce4;font-size:11px}.license-state .state-dot{width:8px;height:8px;border-radius:50%;background:#ff607c;box-shadow:0 0 12px rgba(255,96,124,.65)}.license-state small{color:#aaa6bb;margin-left:auto;font-size:10px}
+.bottom{margin-top:24px;display:grid;grid-template-columns:1fr minmax(260px,360px);gap:28px;align-items:center}.summary{display:flex;align-items:center;gap:12px;color:#9290a5;font-size:11px}.summary strong{font-size:20px;color:#f5f2ff;letter-spacing:-.5px}.cta{height:52px;border:0;border-radius:13px;background:linear-gradient(100deg,#8e5df5,#6269f3 53%,#438ff0);box-shadow:0 8px 25px rgba(93,88,238,.3),inset 0 1px rgba(255,255,255,.28);color:white;font-size:13px;font-weight:800;cursor:pointer;transition:.18s}.cta:hover{filter:brightness(1.12);transform:translateY(-1px);box-shadow:0 11px 32px rgba(93,88,238,.4)}.fineprint{text-align:center;color:#747184;font-size:9px;margin-top:14px;letter-spacing:.15px}
+button:focus-visible{outline:2px solid #cdbdff;outline-offset:3px}
+.modal-bg{position:fixed;inset:0;background:rgba(3,3,10,.78);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:20px;z-index:5}.modal-bg.open{display:flex}.modal{width:min(390px,100%);padding:28px;border-radius:22px;background:#171522;border:1px solid rgba(190,170,255,.3);box-shadow:0 25px 80px #000;text-align:center}.modal h2{font-size:19px;margin:0 0 10px}.modal p{font-size:12px;color:#aaa6bb;line-height:1.7;margin:0}.modal button{margin-top:20px;border:0;border-radius:10px;padding:10px 22px;color:#fff;background:linear-gradient(100deg,#8e5df5,#438ff0);font-weight:700;cursor:pointer}
+@media(max-width:760px){body{padding:14px}.screen{min-height:0;border-radius:25px;grid-template-rows:165px 1fr}.art{height:165px}.topline{left:20px;top:15px;font-size:8px}.brand-word{left:23px;top:57px;font-size:58px;letter-spacing:-4px}.brand-logo{display:none}.brand-caption{left:27px;top:120px;font-size:8px;letter-spacing:1.7px}.orb{width:180px;height:180px;right:3%;top:4px}.art-mark{font-size:82px;right:17%;top:26px}.content{padding:25px 22px 27px}.main-grid{grid-template-columns:1fr;gap:26px}h1{font-size:28px}.subtitle{margin-bottom:18px}.perks{gap:10px}.license-state small{width:100%;margin-left:18px}.bottom{grid-template-columns:1fr;gap:15px;margin-top:22px}.cta{width:100%;grid-row:1}.summary{justify-content:space-between}.extra{min-height:0}}
+@media(max-width:390px){.content{padding:22px 16px}.plan{padding:10px}.price{font-size:13px}.plan-sub{font-size:9px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+/* FULLSCREEN USER LOGO — replaces every previous background */
+html,body{width:100%;min-height:100%;}
+body{min-height:100vh;background:#070611 url("https://raw.githubusercontent.com/tailsparrot1-mind/Vkus-Development/main/F12AA4EB-C1A5-4F4B-81B8-1610092D33B5.png") center center/100% 100% fixed no-repeat;display:grid;place-items:center;padding:0;overflow-x:hidden}
+body:before{display:none!important;content:none!important}
+.screen{width:100%;min-height:100vh;border-radius:0;background:transparent;border:0;box-shadow:none;grid-template-rows:1fr;overflow:visible}
+.art{display:none!important;background:none!important}
+.content{align-self:end;width:100%;background:linear-gradient(180deg,rgba(8,7,17,.72),rgba(8,7,17,.94));backdrop-filter:blur(8px);}
+@media(max-width:760px){.screen{min-height:100vh;grid-template-rows:1fr}.content{padding:25px 22px 27px}}
+
+/* FINAL OVERRIDE: use the uploaded "лого веб" image as the ONLY page background */
+html,body{width:100%;min-height:100%;margin:0}
+html{background:#070611}
+body{position:relative;isolation:isolate;min-height:100vh;padding:0;display:grid;place-items:center;overflow-x:hidden;background:transparent!important}
+body:before{display:none!important;content:none!important}
+body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:url("https://raw.githubusercontent.com/tailsparrot1-mind/Vkus-Development/main/F12AA4EB-C1A5-4F4B-81B8-1610092D33B5.png");background-position:center center;background-size:100% 100%;background-repeat:no-repeat}
+.screen{position:relative;z-index:1;width:100%;min-height:100vh;border:0;border-radius:0;box-shadow:none;background:transparent!important;grid-template-rows:1fr;overflow:visible}
+.art{display:none!important;background:none!important}
+.wave,.orb,.art-mark,.art-glow,.brand-word,.brand-caption,.brand-logo,.topline,.logo{display:none!important}
+.content{align-self:end;width:100%;background:rgba(8,7,17,.78)!important;backdrop-filter:blur(5px)}
+@media(max-width:760px){.screen{min-height:100vh;grid-template-rows:1fr}.content{padding:25px 22px 27px}}
+</style>
+</head>
+<body>
+<main class="screen">
+<section class="art" aria-hidden="true"><div class="wave"></div><div class="orb"></div><div class="art-mark">V</div><div class="art-glow"></div></section>
+<section class="content">
+<div class="license-state" role="status"><span class="state-dot"></span><span><b>Статус лицензии:</b> Не активирована</span><small>Выберите тариф, чтобы ознакомиться с условиями подключения.</small></div>
+<div class="main-grid">
+<div>
+<h1>Откройте возможности Vkus</h1>
+<p class="subtitle">Выберите лицензию и используйте инструменты поиска потенциальных клиентов на нужных площадках.</p>
+<div class="perks">
+<div class="perk"><span class="perk-icon">✓</span><span>Поиск по публикациям и комментариям</span></div>
+<div class="perk"><span class="perk-icon">✓</span><span>Фильтры по городу, региону и дате</span></div>
+<div class="perk"><span class="perk-icon">✓</span><span>Поддержка нескольких платформ</span></div>
+</div>
+</div>
+<div class="plan-area">
+<div class="plan-label">ВЫБЕРИТЕ ВАРИАНТ ЛИЦЕНЗИИ</div>
+<div class="plans" role="radiogroup" aria-label="Вариант лицензии">
+<button class="plan" type="button" role="radio" aria-checked="false" data-plan="base"><span class="radio"></span><span><span class="plan-name">BASE</span><span class="plan-sub">ВКонтакте</span></span><span class="price">79 900 ₽</span></button>
+<button class="plan" type="button" role="radio" aria-checked="true" data-plan="standard"><span class="radio"></span><span><span class="plan-name">STANDARD</span><span class="plan-sub">VK · Telegram · Одноклассники</span></span><span class="price">174 000 ₽</span></button>
+<button class="plan" type="button" role="radio" aria-checked="false" data-plan="premium"><span class="radio"></span><span><span class="plan-name">PREMIUM</span><span class="plan-sub">6 платформ + расширенные возможности</span></span><span class="price">238 000 ₽</span></button>
+</div>
+<div class="extra" id="extra" aria-live="polite">Включены <b>VK, Telegram и Одноклассники</b>.</div>
+</div>
+</div>
+<div class="bottom">
+<div class="summary"><span>Стоимость лицензии</span><strong id="total">174 000 ₽</strong></div>
+<button class="cta" id="continue" type="button">Запросить подключение</button>
+</div>
+<div class="fineprint">Лицензия активируется после согласования и отдельной проверки. Статус в приложении не подменяет серверную проверку.</div>
+</section>
+</main>
+<div class="modal-bg" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal"><h2 id="modal-title">Подключение лицензии</h2><p>Вы выбрали тариф. Для активации лицензии необходимо согласовать подключение с разработчиком. Онлайн-оплата и автоматическая проверка ключа пока не подключены; заказ и списание не выполняются.</p><button id="close" type="button">Понятно</button></div></div>
+<script>
+const data={base:{price:"79 900 ₽",extra:"В лицензии BASE доступна площадка <b>ВКонтакте</b>."},standard:{price:"174 000 ₽",extra:"Включены <b>VK, Telegram и Одноклассники</b>."},premium:{price:"238 000 ₽",extra:"Включены <b>VK, Telegram, Одноклассники, Google, Avito и Yahoo</b>. Дополнительно: фильтрация по поисковым запросам и помощь с первыми 3 заявками."}};
+let selected="standard";const cards=[...document.querySelectorAll(".plan")];
+function choose(key){selected=key;cards.forEach(c=>c.setAttribute("aria-checked",String(c.dataset.plan===key)));document.getElementById("total").textContent=data[key].price;document.getElementById("extra").innerHTML=data[key].extra}
+cards.forEach((c,i)=>{c.addEventListener("click",()=>choose(c.dataset.plan));c.addEventListener("keydown",e=>{if(["ArrowDown","ArrowRight"].includes(e.key)){e.preventDefault();cards[(i+1)%cards.length].focus();choose(cards[(i+1)%cards.length].dataset.plan)}if(["ArrowUp","ArrowLeft"].includes(e.key)){e.preventDefault();cards[(i+cards.length-1)%cards.length].focus();choose(cards[(i+cards.length-1)%cards.length].dataset.plan)}})});
+const modal=document.getElementById("modal");document.getElementById("continue").addEventListener("click",()=>{modal.classList.add("open");document.getElementById("close").focus()});function dismiss(){modal.classList.remove("open");document.getElementById("continue").focus()}document.getElementById("close").addEventListener("click",dismiss);modal.addEventListener("click",e=>{if(e.target===modal)dismiss()});document.addEventListener("keydown",e=>{if(e.key==="Escape"&&modal.classList.contains("open"))dismiss()});choose("standard");
+</script>
+</body>
+</html>
