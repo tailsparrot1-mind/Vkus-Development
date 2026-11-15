@@ -48,6 +48,10 @@ jobs:
           mkdir -p artifacts
           xvfb-run -a -s "-screen 0 1920x1080x24" .venv/bin/python tools/render_exchange_preview.py --output artifacts/Vkus_3.17_Exchange.png
 
+      - name: Launch the full Vkus desktop and capture after splash
+        run: |
+          xvfb-run -a -s "-screen 0 1920x1080x24" .venv/bin/python tools/render_full_app.py --output artifacts/Vkus_3.18_Full_Launch.png
+
       - name: Package runnable Vkus 3.18 source archive
         run: |
           cd Vkus_3.17_NATIVE_EXCHANGE
