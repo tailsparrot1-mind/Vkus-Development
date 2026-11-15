@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080914">
+<meta name="description" content="Официальный магазин лицензий Vkus — инструмента для поиска потенциальных клиентов.">
+<title>Vkus — официальный магазин лицензий</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{color-scheme:dark;--bg:#080914;--panel:#101322;--muted:#989bb5;--text:#f7f7ff;--line:rgba(190,184,255,.13);--violet:#8b5cf6;--blue:#4d7cff;--cyan:#62d5ff;--radius:26px}
+*{box-sizing:border-box}html{min-width:320px;scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 17% 16%,rgba(82,49,177,.25),transparent 34%),radial-gradient(ellipse at 82% 72%,rgba(38,91,190,.18),transparent 36%),#080914;color:var(--text);font-family:Manrope,Inter,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.17;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:56px 56px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+a{color:inherit;text-decoration:none}button{font:inherit}
+.shell{width:min(1320px,calc(100% - 64px));margin:auto;position:relative}
+header{height:92px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.07)}
+.brand{display:flex;align-items:center;gap:13px}.brand-mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(145deg,#a68aff,#5d75ff 65%,#4ac6ff);display:grid;place-items:center;box-shadow:0 0 32px rgba(113,93,255,.35);font-weight:800;font-size:24px;color:white;letter-spacing:-3px;padding-right:3px}.brand-name{font-size:23px;font-weight:800;letter-spacing:-1.1px}.brand-sub{font-size:9px;letter-spacing:2.1px;color:#9296b4;margin-top:3px;font-weight:700}.header-right{display:flex;align-items:center;gap:12px;color:#a9abc1;font-size:12px;font-weight:700;letter-spacing:1.2px}.status-dot{width:7px;height:7px;background:#7bdbbd;border-radius:50%;box-shadow:0 0 12px #7bdbbd}
+main{padding:68px 0 58px}.layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(460px,.95fr);gap:clamp(42px,6vw,92px);align-items:center}
+.eyebrow{display:flex;align-items:center;gap:11px;color:#a99cff;font-size:11px;font-weight:800;letter-spacing:2.4px;text-transform:uppercase}.eyebrow:before{content:"";width:27px;height:1px;background:linear-gradient(90deg,#9b78ff,#5f9aff)}
+h1{font-size:clamp(42px,5.15vw,70px);line-height:1.04;letter-spacing:-3.7px;margin:23px 0 22px;font-weight:800;max-width:650px}h1 span{background:linear-gradient(100deg,#c7b5ff 5%,#8e9cff 50%,#72d5ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{max-width:535px;color:#aeb0c7;font-size:16px;line-height:1.85;margin:0}
+.benefits{display:grid;gap:17px;margin:38px 0 0}.benefit{display:flex;align-items:center;gap:15px;color:#e5e4f4;font-size:14px;font-weight:600}.benefit-icon{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(151,119,255,.18),rgba(70,132,255,.09));border:1px solid rgba(172,154,255,.2);color:#b8a7ff;font-size:15px;flex:none}
+.hero-art{height:210px;position:relative;margin-top:36px;overflow:hidden;border-radius:24px;border:1px solid rgba(173,157,255,.15);background:linear-gradient(115deg,rgba(21,19,49,.94),rgba(12,20,43,.82));box-shadow:inset 0 1px rgba(255,255,255,.06),0 22px 70px rgba(0,0,0,.2)}
+.hero-art:before{content:"";position:absolute;width:430px;height:270px;right:-55px;top:-112px;border-radius:50%;background:radial-gradient(ellipse,rgba(116,82,255,.45),rgba(55,105,255,.17) 42%,transparent 70%);filter:blur(5px)}
+.hero-art:after{content:"";position:absolute;width:270px;height:270px;right:45px;top:14px;border-radius:50%;border:1px solid rgba(170,160,255,.13);box-shadow:0 0 0 24px rgba(151,130,255,.025),0 0 0 48px rgba(151,130,255,.02)}
+.art-orb{position:absolute;right:122px;top:31px;width:148px;height:148px;border-radius:50%;background:radial-gradient(circle at 34% 28%,#e0d7ff 0,#a18aff 12%,#6254d9 34%,#273c9b 63%,#10172f 78%);box-shadow:0 0 45px rgba(117,94,255,.55),inset -18px -20px 35px rgba(5,8,27,.8);z-index:1}
+.art-orb:after{content:"V";position:absolute;inset:0;display:grid;place-items:center;font-size:82px;font-weight:800;letter-spacing:-10px;padding-right:10px;color:rgba(255,255,255,.92);text-shadow:0 3px 26px rgba(255,255,255,.38)}
+.art-caption{position:absolute;left:26px;bottom:24px;z-index:2}.art-caption strong{display:block;font-size:13px;letter-spacing:.3px}.art-caption span{display:block;color:#8589a9;font-size:11px;margin-top:5px}.art-chip{position:absolute;right:26px;bottom:26px;z-index:2;border:1px solid rgba(173,161,255,.2);border-radius:99px;padding:8px 12px;color:#c5bbff;background:rgba(116,91,255,.09);font-size:10px;letter-spacing:1.2px;font-weight:800}
+.purchase{position:relative;border:1px solid rgba(177,164,255,.2);border-radius:30px;padding:29px;background:linear-gradient(145deg,rgba(25,26,48,.94),rgba(13,17,34,.96));box-shadow:0 28px 90px rgba(0,0,0,.36),inset 0 1px rgba(255,255,255,.07);overflow:hidden}
+.purchase:before{content:"";position:absolute;top:-150px;right:-100px;width:340px;height:250px;background:radial-gradient(ellipse,rgba(114,91,255,.18),transparent 68%);pointer-events:none}
+.purchase-head{position:relative;display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}.purchase-head h2{font-size:23px;letter-spacing:-.8px;margin:0 0 7px}.purchase-head p{font-size:12px;color:#9296b2;margin:0}.secure{font-size:10px;color:#9ea3bd;border:1px solid rgba(255,255,255,.1);padding:7px 10px;border-radius:99px;white-space:nowrap}
+.plans{display:grid;gap:10px;position:relative}.plan{width:100%;display:grid;grid-template-columns:20px minmax(0,1fr) auto;align-items:center;gap:13px;text-align:left;color:inherit;padding:17px 16px;border-radius:17px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.025);cursor:pointer;transition:.2s ease;position:relative}.plan:hover{border-color:rgba(164,145,255,.42);background:rgba(143,117,255,.065);transform:translateY(-1px)}.plan[aria-checked=true]{border-color:rgba(153,127,255,.78);background:linear-gradient(105deg,rgba(111,79,220,.19),rgba(57,91,184,.11));box-shadow:inset 0 0 0 1px rgba(145,120,255,.1),0 0 28px rgba(103,82,225,.1)}
+.radio{width:17px;height:17px;border:1.5px solid #666987;border-radius:50%;display:grid;place-items:center}.plan[aria-checked=true] .radio{border-color:#bbaaff}.plan[aria-checked=true] .radio:after{content:"";width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#c5a9ff,#6ca8ff);box-shadow:0 0 10px #9d8aff}
+.plan-name{font-size:12px;font-weight:800;letter-spacing:1.3px}.plan-desc{font-size:11px;color:#999db8;margin-top:4px;line-height:1.5}.plan-price{text-align:right;font-size:18px;font-weight:800;letter-spacing:-.7px;white-space:nowrap}.plan-price small{display:block;color:#8e92ad;font-size:9px;font-weight:600;letter-spacing:.5px;margin-top:3px}
+.plan-premium{border-color:rgba(129,111,255,.32)}.popular{position:absolute;right:14px;top:-9px;background:linear-gradient(90deg,#9872ff,#5e8eff);color:white;font-size:8px;font-weight:800;letter-spacing:1px;padding:4px 8px;border-radius:99px}
+.included{margin:22px 0 0;padding:18px 0 0;border-top:1px solid rgba(255,255,255,.08);position:relative}.included-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.included-head strong{font-size:12px;letter-spacing:.4px}.included-head span{font-size:10px;color:#9296b1}.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px 14px}.feature{display:flex;align-items:flex-start;gap:9px;font-size:11px;line-height:1.5;color:#b9bbd0}.check{color:#9f8cff;font-weight:900;font-size:13px;line-height:1.2}
+.total{display:flex;justify-content:space-between;align-items:end;margin:23px 0 15px}.total-label{font-size:11px;color:#9a9db8}.total-price{font-size:26px;font-weight:800;letter-spacing:-1px}
+.cta{position:relative;width:100%;height:58px;border:0;border-radius:16px;color:white;font-weight:800;font-size:14px;letter-spacing:.2px;cursor:pointer;background:linear-gradient(105deg,#9163f5 0%,#6968f4 48%,#438fe9 100%);box-shadow:0 10px 30px rgba(100,91,244,.3),inset 0 1px rgba(255,255,255,.28);transition:transform .2s,filter .2s}.cta:hover{transform:translateY(-2px);filter:brightness(1.1);box-shadow:0 14px 38px rgba(100,91,244,.4)}.cta:active{transform:translateY(0)}.cta:focus-visible,.plan:focus-visible,.modal-close:focus-visible{outline:2px solid #c4b5fd;outline-offset:3px}
+.legal-note{display:flex;justify-content:center;align-items:center;gap:8px;color:#777c9b;font-size:10px;text-align:center;line-height:1.6;margin:14px 8px 0}.legal-note span{color:#9d9fbd}
+footer{display:flex;justify-content:space-between;gap:20px;padding:20px 0 30px;border-top:1px solid rgba(255,255,255,.06);font-size:10px;color:#777b98}.footer-right{letter-spacing:.8px}
+.modal-backdrop{position:fixed;inset:0;z-index:10;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(3,4,13,.72);backdrop-filter:blur(12px)}.modal-backdrop.open{display:flex}.modal{width:min(440px,100%);position:relative;border:1px solid rgba(174,157,255,.28);border-radius:25px;padding:31px;background:linear-gradient(145deg,#1a1b36,#0e1427);box-shadow:0 30px 100px rgba(0,0,0,.6);text-align:center;animation:pop .22s ease-out}@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}.modal-symbol{width:52px;height:52px;margin:0 auto 18px;border-radius:17px;display:grid;place-items:center;background:linear-gradient(140deg,rgba(151,115,255,.28),rgba(64,130,255,.2));border:1px solid rgba(181,162,255,.3);font-size:23px;color:#c8b8ff}.modal h3{font-size:21px;margin:0 0 10px}.modal p{font-size:13px;color:#a5a8c1;line-height:1.7;margin:0}.modal p strong{color:#e8e7f8}.modal-close{margin-top:23px;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:11px 24px;background:rgba(255,255,255,.06);color:#f5f4ff;font-weight:700;cursor:pointer}
+@media(max-width:980px){.shell{width:min(760px,calc(100% - 40px))}main{padding:46px 0}.layout{grid-template-columns:1fr;gap:34px}.hero-art{max-width:100%}.purchase{max-width:680px;width:100%;margin:auto}h1{max-width:700px}}
+@media(max-width:560px){.shell{width:calc(100% - 28px)}header{height:74px}.brand-mark{width:37px;height:37px}.brand-name{font-size:20px}.brand-sub{font-size:8px;letter-spacing:1.4px}.header-right{font-size:9px;letter-spacing:.8px}main{padding:36px 0 40px}.eyebrow{font-size:9px;letter-spacing:1.7px}h1{font-size:42px;letter-spacing:-2.3px;margin:18px 0}.lead{font-size:14px}.benefits{gap:13px;margin-top:26px}.benefit{font-size:12px}.hero-art{height:170px;margin-top:27px}.art-orb{width:112px;height:112px;right:50px;top:23px}.art-orb:after{font-size:63px}.art-caption{left:17px;bottom:18px}.art-chip{right:14px;bottom:15px;font-size:8px}.purchase{padding:21px 16px;border-radius:23px}.purchase-head h2{font-size:20px}.secure{font-size:8px;padding:6px 8px}.plan{padding:15px 12px;gap:10px;grid-template-columns:17px minmax(0,1fr) auto}.plan-price{font-size:15px}.plan-desc{font-size:10px}.feature-grid{grid-template-columns:1fr;gap:9px}.total-price{font-size:23px}.cta{height:54px}footer{font-size:9px;flex-direction:column;gap:8px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+  <a class="brand" href="#" aria-label="Vkus — главная">
+    <div class="brand-mark">V</div><div><div class="brand-name">Vkus</div><div class="brand-sub">SMART CLIENT SEARCH</div></div>
+  </a>
+  <div class="header-right"><span class="status-dot"></span><span>ОФИЦИАЛЬНЫЙ МАГАЗИН ЛИЦЕНЗИЙ</span></div>
+</header>
+<main>
+<div class="layout">
+<section class="intro">
+  <div class="eyebrow">Точный поиск. Сильные возможности.</div>
+  <h1>Клиенты начинаются<br>с <span>точного поиска.</span></h1>
+  <p class="lead">Vkus помогает находить людей, которым уже интересны ваши услуги или продукт — по открытым публикациям, комментариям и поисковым запросам.</p>
+  <div class="benefits">
+    <div class="benefit"><span class="benefit-icon">⌕</span><span>Поиск по намерению и ключевым фразам</span></div>
+    <div class="benefit"><span class="benefit-icon">◎</span><span>Фильтрация по географии и дате публикации</span></div>
+    <div class="benefit"><span class="benefit-icon">↗</span><span>Рабочее пространство для работы с найденными контактами</span></div>
+  </div>
+  <div class="hero-art" aria-label="Абстрактный светящийся знак Vkus">
+    <div class="art-orb"></div>
+    <div class="art-caption"><strong>Найдите тех, кому актуально</strong><span>Меньше случайных касаний. Больше точности.</span></div>
+    <div class="art-chip">VKUS · LICENSE</div>
+  </div>
+</section>
+<section class="purchase" aria-labelledby="buy-title">
+  <div class="purchase-head"><div><h2 id="buy-title">Выберите лицензию</h2><p>Возможности Vkus под ваши задачи</p></div><div class="secure">✦ Лицензия Vkus</div></div>
+  <div class="plans" role="radiogroup" aria-label="Тариф лицензии">
+    <button class="plan" type="button" role="radio" aria-checked="false" data-plan="base">
+      <span class="radio"></span><span><span class="plan-name">BASE</span><span class="plan-desc">Для работы с аудиторией ВКонтакте</span></span><span class="plan-price">79 900 ₽<small>VK</small></span>
+    </button>
+    <button class="plan" type="button" role="radio" aria-checked="true" data-plan="standard">
+      <span class="radio"></span><span><span class="plan-name">STANDARD</span><span class="plan-desc">Несколько площадок в одном процессе</span></span><span class="plan-price">174 000 ₽<small>3 ПЛОЩАДКИ</small></span>
+    </button>
+    <button class="plan plan-premium" type="button" role="radio" aria-checked="false" data-plan="premium">
+      <span class="popular">МАКСИМУМ ВОЗМОЖНОСТЕЙ</span><span class="radio"></span><span><span class="plan-name">PREMIUM</span><span class="plan-desc">Расширенный поиск и помощь на старте</span></span><span class="plan-price">238 000 ₽<small>6 ПЛОЩАДОК</small></span>
+    </button>
+  </div>
+  <div class="included">
+    <div class="included-head"><strong>Что входит в лицензию</strong><span id="plan-label">STANDARD</span></div>
+    <div class="feature-grid" id="feature-list" aria-live="polite"></div>
+  </div>
+  <div class="total"><span class="total-label">Стоимость выбранной лицензии</span><span class="total-price" id="total-price">174 000 ₽</span></div>
+  <button class="cta" id="buy-button" type="button">Выбрать STANDARD</button>
+  <div class="legal-note"><span>◈</span> Подключение и запуск — после подтверждения оплаты. <span>◈</span></div>
+</section>
+</div>
+</main>
+<footer><span>© Vkus. Официальный магазин лицензий.</span><span class="footer-right">ПОИСК · АНАЛИЗ · РЕЗУЛЬТАТ</span></footer>
+</div>
+<div class="modal-backdrop" id="payment-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal">
+    <div class="modal-symbol">✦</div>
+    <h3 id="modal-title">Онлайн-оплата подключается</h3>
+    <p>Вы выбрали лицензию <strong id="modal-plan">STANDARD</strong> за <strong id="modal-price">174 000 ₽</strong>.<br><br>Платёжный провайдер Robokassa пока не подключён. Заказ не создан, списание не выполняется.</p>
+    <button class="modal-close" id="close-modal" type="button">Понятно</button>
+  </div>
+</div>
+<script>
+const plans={
+ base:{name:"BASE",price:"79 900 ₽",features:["Поиск по открытым публикациям ВКонтакте","Поиск по комментариям ВКонтакте","Фильтрация по региону и городу","Фильтрация по дате публикации"]},
+ standard:{name:"STANDARD",price:"174 000 ₽",features:["Все возможности BASE","Telegram","Одноклассники","Единый процесс поиска по трём площадкам"]},
+ premium:{name:"PREMIUM",price:"238 000 ₽",features:["VK · Telegram · Одноклассники","Google · Avito · Yahoo","Фильтрация по поисковым запросам","Помощь с первыми 3 заявками"]}
+};
+let selected="standard";
+const buttons=[...document.querySelectorAll(".plan")];
+const featureList=document.getElementById("feature-list");
+function selectPlan(key){
+ selected=key;const p=plans[key];
+ buttons.forEach(b=>{const active=b.dataset.plan===key;b.setAttribute("aria-checked",String(active));});
+ document.getElementById("plan-label").textContent=p.name;
+ document.getElementById("total-price").textContent=p.price;
+ document.getElementById("buy-button").textContent="Выбрать "+p.name;
+ featureList.innerHTML=p.features.map(item=>'<div class="feature"><span class="check">✓</span><span>'+item+'</span></div>').join("");
+}
+buttons.forEach((b,i)=>{b.addEventListener("click",()=>selectPlan(b.dataset.plan));b.addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key==="ArrowDown"){e.preventDefault();buttons[(i+1)%buttons.length].focus();buttons[(i+1)%buttons.length].click()}if(e.key==="ArrowLeft"||e.key==="ArrowUp"){e.preventDefault();buttons[(i+buttons.length-1)%buttons.length].focus();buttons[(i+buttons.length-1)%buttons.length].click()}})});
+const modal=document.getElementById("payment-modal");
+document.getElementById("buy-button").addEventListener("click",()=>{document.getElementById("modal-plan").textContent=plans[selected].name;document.getElementById("modal-price").textContent=plans[selected].price;modal.classList.add("open");document.getElementById("close-modal").focus()});
+function closeModal(){modal.classList.remove("open");document.getElementById("buy-button").focus()}
+document.getElementById("close-modal").addEventListener("click",closeModal);
+modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&modal.classList.contains("open"))closeModal()});
+selectPlan("standard");
+</script>
+</body>
+</html>
