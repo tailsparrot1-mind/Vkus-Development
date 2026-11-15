@@ -468,9 +468,15 @@ class VkusApp:
             txt(36,y+13,ico,24,'#39d9ff' if label=='Биржа' else '#a96bff','bold')
             txt(82,y+17,label,16,'#ffffff' if label=='Биржа' else '#9aadd8','bold' if label=='Биржа' else 'normal')
         rect(28,728,250,855,'#071b35','#2d79b6',16,1)
-        txt(46,746,'Ваш статус',13,'#b7c8ed'); txt(46,773,'● Активен',16,'#00e5b4','bold')
-        txt(46,811,'★ Премиум',16,'#ffc34d','bold'); txt(46,836,'до 24.12.2026',11,'#a6b6dc')
-        txt(36,884,'Vkus v3.16',12,'#8b9cc8')
+        license_state = str(self.settings.get('license_status', 'Не активирована'))
+        license_plan = str(self.settings.get('license_plan', '—'))
+        license_expires = str(self.settings.get('license_expires', '—'))
+        license_active = license_state.lower() in ('активна', 'active')
+        txt(46,746,'Ваш статус',13,'#b7c8ed')
+        txt(46,773,'● ' + license_state,14,'#00e5b4' if license_active else '#ff607c','bold')
+        txt(46,811,('★ ' + license_plan) if license_plan != '—' else 'Тариф не выбран',13,'#ffc34d' if license_active else '#a6b6dc','bold')
+        txt(46,836,'◈  Лицензия  ·  открыть',11,'#c58cff','bold')
+        txt(36,884,'Vkus v3.18',12,'#8b9cc8')
         # Main title/header
         txt(306,43,'Биржа спроса и предложений',38,'#cf74ff','bold')
         txt(307,105,'Находите клиентов, исполнителей и актуальные задачи рядом с вами',18,'#e4eaff')
@@ -585,6 +591,9 @@ class VkusApp:
         if 1360 <= x <= 1618 and 716 <= y <= 897:
             messagebox.showinfo('Анализ спроса',
                 'В этом блоке показаны будущие параметры анализа. Реальная классификация и оценка спроса подключаются вместе с поисковыми источниками.', parent=self.exchange_window); return
+        if 28 <= x <= 250 and 728 <= y <= 855:
+            self._open_license()
+            return
         if 10 <= x <= 254 and 375 <= y <= 676:
             if 375 <= y < 432: self._exchange_info('Сообщения')
             elif 436 <= y < 493: self._exchange_info('Поиск')
