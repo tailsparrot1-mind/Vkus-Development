@@ -63,6 +63,7 @@ jobs:
           test -s artifacts/vkus_tabs/03_Messages.png
           test -s artifacts/vkus_tabs/04_Exchange.png
           test -s artifacts/vkus_tabs/05_License.png
+          test -s artifacts/vkus_tabs/06_About.png
 
       - name: Package runnable Vkus 3.18 source archive
         run: |
