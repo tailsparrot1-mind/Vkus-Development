@@ -34,6 +34,10 @@ DEFAULTS = {
     'search_state': 'Новые сообщения',
     'search_scroll_timeout': '90',
     'search_scroll_rounds': '120',
+    # Display-only state until a real license validation service is connected.
+    'license_status': 'Не активирована',
+    'license_plan': '—',
+    'license_expires': '—',
 }
 
 
