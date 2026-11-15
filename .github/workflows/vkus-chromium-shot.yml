@@ -22,11 +22,16 @@ jobs:
           (async()=>{
             const browser=await chromium.launch({headless:true});
             const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});
-            await page.goto('https://raw.githack.com/tailsparrot1-mind/Vkus-Development/VKUS/Vkus_Store_PC/index_logo_fullscreen.html?shot=20261115',{waitUntil:'networkidle',timeout:120000});
-            await page.screenshot({path:'vkus-chromium.png',fullPage:true});
+            await page.goto('https://raw.githack.com/tailsparrot1-mind/Vkus-Development/VKUS/Vkus_Store_PC/index_logo_fullscreen.html?shot=20261115b',{waitUntil:'networkidle',timeout:120000});
+            if ((await page.locator('body').innerText()).includes("You're going to open:")) {
+              await page.getByText('Open the page',{exact:true}).click();
+              await page.waitForLoadState('networkidle',{timeout:120000}).catch(()=>{});
+            }
+            await page.waitForTimeout(2500);
             console.log('TITLE:',await page.title());
             console.log('URL:',page.url());
-            console.log('BODY:',(await page.locator('body').innerText()).slice(0,1000));
+            console.log('BODY:',(await page.locator('body').innerText()).slice(0,1200));
+            await page.screenshot({path:'vkus-chromium.png',fullPage:true});
             await browser.close();
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
