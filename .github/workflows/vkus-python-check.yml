@@ -39,6 +39,8 @@ jobs:
           grep -q "_open_license" Vkus_3.17_NATIVE_EXCHANGE/vkus/app.py
           grep -q "ЛИЦЕНЗИЯ:" Vkus_3.17_NATIVE_EXCHANGE/vkus/app.py
           grep -q "Статус лицензии" Vkus_3.17_NATIVE_EXCHANGE/store/index.html
+          grep -q "Лицензия  ·  открыть" Vkus_3.17_NATIVE_EXCHANGE/vkus/app.py
+          grep -q "def _open_license(self):" Vkus_3.17_NATIVE_EXCHANGE/vkus/app.py
           .venv/bin/python -m compileall -q Vkus_3.17_NATIVE_EXCHANGE
 
       - name: Render the actual Tkinter Exchange window
