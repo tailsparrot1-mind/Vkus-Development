@@ -439,3 +439,14 @@ CI:
 Ссылка: https://github.com/tailsparrot1-mind/Q322/actions/runs/44367095809 .
 
 Это только compile/build и unit tests подписи. D1 migration, Worker runtime через `wrangler dev`, обработка callback с D1, повторные callbacks, email provider, Sandbox и WebView в Kali ещё НЕ ПРОВЕРЕНЫ. В отчёте Q322 отражён обновлённый статус: https://github.com/tailsparrot1-mind/Q322/blob/feature/cloudflare-license-store-foundation/docs/REPORT_Vkus_Cloudflare_Free_License_Store_Review_2026-11-18.md .
+
+
+### Уточнение — локальные D1 migrations прошли, Worker HTTP smoke пока падает
+
+В CI добавлена проверка локальной D1 и запуска Worker:
+- миграции `0001_initial.sql` и `0002_email_outbox.sql` применились успешно к локальной D1 (13 SQL-команд суммарно);
+- TypeScript typecheck/build PASS;
+- 3 signature unit tests PASS;
+- дополнительный smoke `wrangler dev` + HTTP GET `/api/health` и `/api/plans` завершился FAILURE: процесс не ответил на `127.0.0.1:8787`. Run: https://github.com/tailsparrot1-mind/Q322/actions/runs/44367322769 .
+В workflow добавлена расширенная диагностика лога старта и polling; новый успешный runtime запуск ещё не подтверждён. Поэтому Worker runtime/integration остаётся НЕ ПРОВЕРЕН.
+Не смешивать успешное применение локальной схемы D1 с созданием/развёртыванием Cloudflare D1 в аккаунте пользователя.
