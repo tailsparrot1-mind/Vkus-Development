@@ -426,3 +426,16 @@ CI:
 После исправления зависимостей новый успешный CI запуск пока не подтверждён. TypeScript/runtime tests остаются НЕ ПРОВЕРЕНЫ.
 
 Актуальный HEAD feature branch после исходников, миграций и workflow: `ab53dd812ffe9cb0f262eff724de7792fe3c2479` на момент проверки; затем обновлён отчёт. Последующие коммиты отчёта не меняют Worker-код. Отчёт содержит точную хронологию и семь статусов: https://github.com/tailsparrot1-mind/Q322/blob/feature/cloudflare-license-store-foundation/docs/REPORT_Vkus_Cloudflare_Free_License_Store_Review_2026-11-18.md .
+
+
+### Уточнение к CI — TypeScript и signature unit tests успешно пройдены
+
+После исправления package versions CI run `44367095809` завершился SUCCESS на Worker commit `ab53dd812ffe9cb0f262eff724de7792fe3c2479`:
+- npm install — PASS;
+- TypeScript `tsc --noEmit` — PASS;
+- TypeScript build — PASS;
+- Robokassa signature tests — PASS, 3/3;
+- Wrangler CLI version check — PASS, 4.164.0.
+Ссылка: https://github.com/tailsparrot1-mind/Q322/actions/runs/44367095809 .
+
+Это только compile/build и unit tests подписи. D1 migration, Worker runtime через `wrangler dev`, обработка callback с D1, повторные callbacks, email provider, Sandbox и WebView в Kali ещё НЕ ПРОВЕРЕНЫ. В отчёте Q322 отражён обновлённый статус: https://github.com/tailsparrot1-mind/Q322/blob/feature/cloudflare-license-store-foundation/docs/REPORT_Vkus_Cloudflare_Free_License_Store_Review_2026-11-18.md .
