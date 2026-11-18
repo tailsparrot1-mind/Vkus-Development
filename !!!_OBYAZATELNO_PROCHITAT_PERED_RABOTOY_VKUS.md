@@ -416,3 +416,13 @@ CI:
 7. WebView в Kali — НЕ ПРОВЕРЕН: новый сайт не развёрнут; CI/Xvfb не заменяет Kali/VMware.
 
 Не просить пользователя присылать секреты в чат. Не включать реальные платежи. Текущая работа не является завершённым переносом магазина и не готова к merge/production.
+
+
+### Уточнение к разделу 19 — CI dependency fixes
+
+После создания workflow выявлены две реальные ошибки конфигурации CI:
+- workflow run `44366923371`: setup-node не смог настроить npm cache при отсутствии lockfile; cache удалён.
+- workflow run `44366972455`: npm install завершился ETARGET, поскольку `@cloudflare/workers-types@^4.20261118.0` не существует. По npm проверены доступные версии; зависимость исправлена на `^5.20261117.1`, Wrangler на `^4.164.0`. Источники версий: https://www.npmjs.com/package/@cloudflare/workers-types ; https://www.npmjs.com/package/wrangler .
+После исправления зависимостей новый успешный CI запуск пока не подтверждён. TypeScript/runtime tests остаются НЕ ПРОВЕРЕНЫ.
+
+Актуальный HEAD feature branch после исходников, миграций и workflow: `ab53dd812ffe9cb0f262eff724de7792fe3c2479` на момент проверки; затем обновлён отчёт. Последующие коммиты отчёта не меняют Worker-код. Отчёт содержит точную хронологию и семь статусов: https://github.com/tailsparrot1-mind/Q322/blob/feature/cloudflare-license-store-foundation/docs/REPORT_Vkus_Cloudflare_Free_License_Store_Review_2026-11-18.md .
