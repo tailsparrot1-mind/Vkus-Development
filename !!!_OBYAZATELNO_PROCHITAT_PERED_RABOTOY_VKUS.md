@@ -387,3 +387,32 @@ Backend scaffold включает базовые маршруты health/plans/o
 7. WebView в Kali — НЕ ПРОВЕРЕН; CI/Xvfb не заменяет запуск на целевой машине пользователя.
 
 Работа продолжается в `feature/cloudflare-license-store-foundation`; PR #1 остаётся Draft. Не сливать и не включать реальные платежи до тестов, security review и прохождения всех обязательных сценариев.
+
+
+## 19. License Store — продолжение Cloudflare-миграции (18.11.2026)
+
+Работа продолжается в Q322, ветка `feature/cloudflare-license-store-foundation`, Draft PR #1: https://github.com/tailsparrot1-mind/Q322/pull/1 . В main настольного приложения эти изменения пока не слиты.
+
+Добавлено в feature branch:
+- `license-store/site/index.html` — временная статическая витрина в палитре Vkus. Она получает тарифы из Worker API и создаёт заказ. Это НЕ точный перенос прежнего дизайна: исходные файлы опубликованной Lovable-витрины в Q322 не найдены, веб-инструмент не смог прочитать текущую публичную страницу. Для точного совпадения нужны экспорт исходников прежнего сайта либо скриншоты/материалы от пользователя. До сравнения пункт переноса дизайна остаётся НЕ ВЫПОЛНЕН.
+- `license-store/worker/migrations/0002_email_outbox.sql` — очередь писем с retry, backoff и lease timeout.
+- Worker отправляет письмо с ключом через Resend HTTP API после подтверждённого ResultURL; ключ расшифровывается только внутри Worker, HTML-значения экранируются. Cron запускает обработку очереди раз в минуту. Код создан, но без Resend account, подтверждённого sender domain и API key доставка не проверена и не работает в production.
+- Resend выбран как кандидат: официальная pricing page показывает Free 3 000 писем/месяц, максимум 100/сутки. Перед запуском проверить актуальные лимиты; не включать платные overages. Источник: https://resend.com/pricing .
+- Добавлены Node test cases для Robokassa signature SHA-256/384/512 и запрета неподдерживаемого алгоритма; добавлен GitHub Actions workflow для TypeScript typecheck и tests.
+- Исправлена payment signature: Shp_order должен входить после Password #1. ResultURL формирует подпись с Password #2 и Shp-параметрами после него. Официальные источники: https://docs.robokassa.ru/ru/pay-interface.html ; https://docs.robokassa.ru/ru/notifications-and-redirects.html .
+
+CI:
+- Первый запуск нового workflow #44366923371 завершился FAILURE на setup-node, потому что workflow ожидал npm cache lockfile, которого пока нет. npm install, typecheck и тесты не запускались. Workflow исправлен; повторный успешный запуск ещё не подтверждён. Следовательно TypeScript/runtime-тесты пока НЕ ПРОВЕРЕНЫ.
+- Отчёт с подробным статусом и блокерами: https://github.com/tailsparrot1-mind/Q322/blob/feature/cloudflare-license-store-foundation/docs/REPORT_Vkus_Cloudflare_Free_License_Store_Review_2026-11-18.md .
+- Код и frontend сохраняются только в feature branch; PR Draft; не сливать до проверки.
+
+Статус семи обязательных пунктов:
+1. Перенос дизайна — НЕ ВЫПОЛНЕН: есть только временная стилизованная витрина, точный референс не восстановлен.
+2. Каталог действующих тарифов — НЕ ПЕРЕНЕСЁН: D1 plans не заполнена подтверждёнными данными.
+3. Email-выдача ключей — КОД ОЧЕРЕДИ И ОТПРАВКИ ДОБАВЛЕН, НО НЕ ПРОВЕРЕН: нужны Resend account, verified sender domain, API key и end-to-end test.
+4. TypeScript/runtime — workflow и тесты добавлены, запуск не прошёл дальше setup-node; НЕ ПРОВЕРЕНО.
+5. Robokassa Sandbox — НЕ ПОДКЛЮЧЕНА: нужны тестовые настройки/credentials и реальный callback test.
+6. Cloudflare Worker/D1 — НЕ РАЗВЁРНУТЫ: нет подтверждённого Cloudflare account, database_id и secrets.
+7. WebView в Kali — НЕ ПРОВЕРЕН: новый сайт не развёрнут; CI/Xvfb не заменяет Kali/VMware.
+
+Не просить пользователя присылать секреты в чат. Не включать реальные платежи. Текущая работа не является завершённым переносом магазина и не готова к merge/production.
