@@ -476,3 +476,8 @@ CI:
 ### Уточнение к Worker smoke CI — 19.11.2026
 
 Полные логи run `44367568013` показывают, что локальный Worker реально запустился и `GET /api/health` вернул корректный JSON с `service: vkus-license-store`. FAILURE произошёл на shell assertion после запроса `/api/plans`; в проверке пустого массива использовалось избыточное экранирование regex. Само тело `/api/plans` прежним workflow не печаталось, поэтому его результат не утверждать. Workflow исправлен: печатает тело ответа и использует fixed-string grep для `"plans":[]`. Commit исправления `2f2208eb8c7477161d6d82b2f53cc9dfd939b8e2`. Ожидается новый CI run; до PASS runtime smoke остаётся НЕ ПРОВЕРЕННЫМ.
+
+
+### Результат исправленного Worker local runtime smoke — 19.11.2026
+
+CI run `44385356108` на commit `2f2208eb8c7477161d6d82b2f53cc9dfd939b8e2` завершился SUCCESS. Подтверждены npm install, TypeScript typecheck/build, 3/3 signature unit tests, обе локальные D1 migrations, запуск `wrangler dev`, HTTP `GET /api/health` (`ok:true`, `service:vkus-license-store`), HTTP `GET /api/plans` (`{"plans":[]}` на пустой тестовой БД) и Wrangler 4.164.0. Причина предыдущего FAILURE была в чрезмерном экранировании grep assertion, а не в отсутствии HTTP-ответа Worker. Это локальный runtime smoke, не end-to-end payment/Resend test, не Cloudflare deployment и не Kali WebView test. Подробности внесены в Q322 report.
