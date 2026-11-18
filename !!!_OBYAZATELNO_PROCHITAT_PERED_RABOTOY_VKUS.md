@@ -343,3 +343,23 @@ GitHub является долговременным источником ист
 Технический отчёт: `Q322/docs/REPORT_Vkus_Cloudflare_Free_License_Store_Review_2026-11-18.md`, commit `9d71ae3c2645ae8a20915c4257382d06770c594f`.
 Источники: https://developers.cloudflare.com/workers/platform/limits/ ; https://developers.cloudflare.com/d1/platform/limits/ ; https://developers.cloudflare.com/d1/platform/pricing/ ; https://developers.cloudflare.com/workers/configuration/routing/workers-dev/ ; https://developers.cloudflare.com/workers/configuration/secrets/ ; https://docs.robokassa.ru/ru/iframe.html ; https://docs.robokassa.ru/ru/notifications-and-redirects.html .
 
+
+
+## 17. Cloudflare Worker — первый backend-каркас (18.11.2026)
+
+В Q322 создана feature branch `feature/cloudflare-license-store-foundation`, Draft PR #1: https://github.com/tailsparrot1-mind/Q322/pull/1. Не считать PR слитым или production-ready.
+
+Добавлены:
+- `license-store/worker/wrangler.toml`
+- `license-store/worker/migrations/0001_initial.sql`
+- `license-store/worker/src/index.ts`
+- `license-store/worker/package.json`
+- `license-store/worker/tsconfig.json`
+- `license-store/worker/README.md`
+
+Backend scaffold включает базовые маршруты health/plans/orders, формирование Robokassa payment URL, ResultURL с SHA-256-проверкой подписи и сверкой суммы/InvId/order_id, Success/Fail return, активацию лицензии. D1 schema содержит plans, orders, payment_events, licenses, activations. Сгенерированный ключ сохраняется в виде SHA-256 hash и AES-GCM ciphertext; шифровальный ключ должен задаваться отдельным Worker Secret. Пароли Robokassa и прочие секреты в репозиторий не добавлялись.
+
+Ограничения: код пока не прошёл TypeScript/runtime/security tests; миграция не применялась; Worker не развёрнут; Cloudflare account/D1/URL отсутствуют; каталог тарифов не заполнен; storefront не перенесён; email и безопасное получение лицензии покупателем не реализованы; rate limiting и status polling отсутствуют. В запрос оплаты временно жёстко установлен IsTest=1. Поддержан только SHA-256, поэтому алгоритм кабинета Robokassa должен совпадать либо реализацию надо расширить. Не сливать PR и не принимать реальные платежи до проверки и устранения открытых пунктов.
+
+Отчёт о ходе работ: `Q322/docs/REPORT_Vkus_Cloudflare_Free_License_Store_Review_2026-11-18.md`, обновлён commit `85402268910f3f9840abea64f7cf2c8fbf6dc8e5`.
+
