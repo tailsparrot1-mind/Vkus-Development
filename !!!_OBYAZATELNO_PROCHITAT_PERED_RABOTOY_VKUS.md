@@ -882,3 +882,10 @@ GitHub Actions run `45061578453`, commit `93677d4f2c4f356fa794cd0fb10f82a30dd282
 - Полноценные фотографии объявлений — НЕ РЕАЛИЗОВАНЫ.
 
 Не считать этап полностью принятым до получения PASS нового WebView smoke, просмотра свежих скриншотов и запуска в целевой среде пользователя.
+
+Уточнение к записи WebView Marketplace от 23.11.2026:
+- Последний подтверждённый коммит Q322/main на момент проверки: `1c4f7e817b4fcd7f97b470f0761be29fa3f1651a` (обновление README после кода и отчёта).
+- README: `1c4f7e817b4fcd7f97b470f0761be29fa3f1651a`; отчёт `docs/REPORT_Vkus_Marketplace_WebView_2026-11-23.md`: `9ccb83fdbeb91e0c5f6d51ed6bfb0204e7780306`.
+- Повторным чтением GitHub подтверждено наличие `vkus/exchange_marketplace.py`, `vkus/marketplace_web.py`, всех трёх файлов `vkus/assets/marketplace_web/`, `.github/scripts/smoke_marketplace.py`, workflow, README и отчёта.
+- Последняя редакция Python WebView host — blob `cb4af2a07b73f6b83ea41932325800d5be61eec9`; HTML — `67107b21d1aafd1fde4c13da47c42f3fe9b227ec`; CSS — `56e14979159495c080b1b3f68f438d85035924eb`; JS — `ce5907b27e05a7e50495e1ad488244bfd85df21c`; smoke — `942ebdbc5e8683133d5e7f7df77056cf6244c377`; workflow — `e6a718179bd6ec32129e1261291c247b581f7842`.
+- В текущем доступном GitHub status-check ответе для head не вернулись статусы; поэтому запуск и результат Actions пока не подтверждены. Не объявлять UI smoke PASS и не ссылаться на старые скриншоты Tkinter как на проверку нового WebView.
