@@ -889,3 +889,9 @@ GitHub Actions run `45061578453`, commit `93677d4f2c4f356fa794cd0fb10f82a30dd282
 - Повторным чтением GitHub подтверждено наличие `vkus/exchange_marketplace.py`, `vkus/marketplace_web.py`, всех трёх файлов `vkus/assets/marketplace_web/`, `.github/scripts/smoke_marketplace.py`, workflow, README и отчёта.
 - Последняя редакция Python WebView host — blob `cb4af2a07b73f6b83ea41932325800d5be61eec9`; HTML — `67107b21d1aafd1fde4c13da47c42f3fe9b227ec`; CSS — `56e14979159495c080b1b3f68f438d85035924eb`; JS — `ce5907b27e05a7e50495e1ad488244bfd85df21c`; smoke — `942ebdbc5e8683133d5e7f7df77056cf6244c377`; workflow — `e6a718179bd6ec32129e1261291c247b581f7842`.
 - В текущем доступном GitHub status-check ответе для head не вернулись статусы; поэтому запуск и результат Actions пока не подтверждены. Не объявлять UI smoke PASS и не ссылаться на старые скриншоты Tkinter как на проверку нового WebView.
+
+Финальное уточнение по WebView UI после ревизии CSP-совместимости:
+- CSS/JS обновлены: карточные градиенты переведены с inline style на локальные CSS-классы, чтобы не полагаться на разрешение inline-style в локальном WebView CSP.
+- Коммиты: CSS `465f8bccb9505ddee5889e3dec8db290dd618948`; JS `9d0fec5098f7fefbea6dd2ad2f6d869b0321b64e`.
+- Актуальный последний кодовый commit Q322/main на момент этой записи: `9d0fec5098f7fefbea6dd2ad2f6d869b0321b64e`. README/отчёт были сохранены до этих двух косметических уточнений; смысл отчёта не меняется.
+- Статус CI и скриншоты WebView по-прежнему не подтверждены; не заявлять визуальную проверку или полный запуск.
