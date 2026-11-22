@@ -651,3 +651,12 @@ GitHub Actions run `45055685481`, head на момент проверки `d5ba6
 - license-store-webview-smoke — ещё выполнялся при последней проверке.
 
 В первом run `45055445989` unit test истории падал из-за предположения о порядке запусков с одинаковой секундной меткой; исправлен тест, чтобы находить запуск по тексту запроса. Сам UI smoke в том run уже проходил. Повторный run 45055685481 подтвердил успешный compile и UI smoke после исправления.
+
+
+Полный CI-проход на application-code head `d5ba6f1e43f157a430c985d878513dc9c0957385` — run `45055685481`:
+- compile + focused SQLite unit tests — PASS;
+- personal-archive-ui-smoke — PASS;
+- marketplace-ui-smoke — PASS;
+- license-store-webview-smoke — PASS.
+Артефакт скриншота личного архива и исходный ZIP-пакет загружены.
+Следующий run `45055821837` на последующем documentation-only head: compile, marketplace smoke и personal archive smoke — PASS; WebView job ещё выполнялся при последней проверке.
