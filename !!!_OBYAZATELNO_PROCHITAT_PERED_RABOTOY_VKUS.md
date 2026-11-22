@@ -758,3 +758,5 @@ GitHub Actions run 45057878686, head 876761d7fce5bacf2c6099293fd4b0726d35f462:
 Отчёт: Q322/docs/REPORT_Vkus_Marketplace_Responsive_2026-11-22.md.
 Workflow: https://github.com/tailsparrot1-mind/Q322/actions/runs/45057878686
 Следующий шаг: целевой запуск в Kali/VMware и сверка с исходным пользовательским референсом без самостоятельного редизайна.
+
+Дополнение к записи от 22.11.2026: после полного CI-прохождения README повторно уточнён коммитом Q322/main `eae005088becc7255413abed68b688021d356d34`: в нём явно указано, что compile/source ZIP, Marketplace UI smoke и License Store WebView smoke завершились PASS. Сам код Marketplace после smoke-проверки не менялся.
