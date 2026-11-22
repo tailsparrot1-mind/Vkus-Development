@@ -638,3 +638,16 @@ Backend archive store:
 - PR #4 остаётся Draft, не слит в main.
 
 Следующий шаг: получить GitHub Actions результаты нового head; при ошибке исправить smoke/UI; затем проверить реальную сборку в Kali/VMware.
+
+
+### CI-результаты экрана личного архива (22.11.2026)
+
+GitHub Actions run `45055685481`, head на момент проверки `d5ba6f1e43f157a430c985d878513dc9c0957385`:
+- compileall — PASS;
+- `tests/test_demand_store.py` — PASS;
+- personal-archive-ui-smoke — PASS: список, текстовый фильтр, фильтры города/типа, история поисков, возврат к результатам запуска и удаление записи;
+- screenshot artifact `Vkus-personal-archive-ui` создан и загружен;
+- marketplace-ui-smoke — PASS;
+- license-store-webview-smoke — ещё выполнялся при последней проверке.
+
+В первом run `45055445989` unit test истории падал из-за предположения о порядке запусков с одинаковой секундной меткой; исправлен тест, чтобы находить запуск по тексту запроса. Сам UI smoke в том run уже проходил. Повторный run 45055685481 подтвердил успешный compile и UI smoke после исправления.
