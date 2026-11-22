@@ -543,3 +543,13 @@ Backend:
 - Все предыдущие утверждения о готовом автоматическом VK collector считать отменёнными. Реально реализован user-selected JSON importer + backend auth gate, не автоматический сборщик.
 
 Следующий допустимый путь: получить явное разрешение VK/партнёрский доступ на нужный коммерческий сценарий либо использовать источник, условия которого разрешают автоматизированный сбор и коммерческое использование данных. До этого VK source остаётся disabled.
+
+
+### CI для ручного VK importer — 22.11.2026
+
+GitHub Actions run `45051682390` на PR #3 / head `1b24031bb96928fc15f2f85ed6efac658a4c51a4`:
+- compileall — PASS;
+- `test_vk_demand_collector.py` — PASS;
+- ZIP source package — PASS, artifact step завершён;
+- marketplace-ui-smoke и license-store-webview-smoke на момент последней проверки ещё выполнялись.
+Это подтверждает синтаксис, тесты нормализации и упаковку исходников, но не live VK, Supabase upload или Kali/VMware.
