@@ -481,3 +481,37 @@ CI:
 ### Результат исправленного Worker local runtime smoke — 19.11.2026
 
 CI run `44385356108` на commit `2f2208eb8c7477161d6d82b2f53cc9dfd939b8e2` завершился SUCCESS. Подтверждены npm install, TypeScript typecheck/build, 3/3 signature unit tests, обе локальные D1 migrations, запуск `wrangler dev`, HTTP `GET /api/health` (`ok:true`, `service:vkus-license-store`), HTTP `GET /api/plans` (`{"plans":[]}` на пустой тестовой БД) и Wrangler 4.164.0. Причина предыдущего FAILURE была в чрезмерном экранировании grep assertion, а не в отсутствии HTTP-ответа Worker. Это локальный runtime smoke, не end-to-end payment/Resend test, не Cloudflare deployment и не Kali WebView test. Подробности внесены в Q322 report.
+
+
+## 20. VK public-demand collector — 22.11.2026
+
+По прямому указанию пользователя продолжена реализация VK-адаптера для внешнего спроса. Работа ведётся отдельно от main в Q322, ветка `feature/vk-demand-collector`; Draft PR #3: https://github.com/tailsparrot1-mind/Q322/pull/3 .
+
+Добавлено в feature branch:
+- `vkus/vk_demand_collector.py` — CLI-адаптер, использующий существующий `BrowserManager.search_vk` и постоянный Firefox-профиль Vkus; поддерживает публичный поиск публикаций и комментариев.
+- Нормализация в контракт `ingest_vkus_external_demand`: `external_key`, `source_kind`, `intent`, `title`, `body_excerpt`, авторская метка, регион/город, URL и дата публикации.
+- Консервативная эвристика классификации: только выраженные фразы «ищу мастера/специалиста», «нужен мастер» и аналогичные метки request; выраженные фразы «предлагаю услуги», «оказываю услуги» и т. п. — offer; неоднозначные случаи остаются unknown.
+- По умолчанию режим dry-run; отправка только с явным флагом `--upload`. В коде отсутствует service-role key.
+- Firefox-сессия не должна закрываться при завершении отдельного запуска сборщика; сборщик снимает собственный atexit-handler.
+- `tests/test_vk_demand_collector.py` — тесты классификации и нормализации.
+- `docs/VK_DEMAND_COLLECTOR.md` — инструкция по запуску, ограничения и безопасность.
+- В GitHub Actions добавлен запуск тестов нормализации для этого модуля.
+
+Backend:
+- Источник VK зарегистрирован как `public-post-search`, UUID `4a2731fe-c51c-4ceb-867e-402542881e31`.
+- Источник намеренно выключен (`enabled=false`), `terms_reviewed_at=null`. Это блокирует ingest до проверки условий VK и подтверждения допустимого объёма сбора.
+- `private.collector_tokens` хранит SHA-256 хеши токенов, а не открытые значения.
+- `public.verify_vkus_collector_token` проверяет токен, привязку к источнику, отзыв токена, включённость источника и отметку terms review.
+- `public.issue_vkus_collector_token` выпускает случайный токен только для включённого и прошедшего terms review источника; значение возвращается один раз, в таблице остаётся только хеш.
+- Edge Function `ingest-vkus-demand` развёрнута как версия 2 с `verify_jwt=false`; внутри функции выполняется обязательная проверка отдельного opaque collector token через серверный service-role secret. Service-role key не передаётся desktop-сборщику.
+- Попытка выпустить токен для текущего выключенного источника ожидаемо отклонена ошибкой `Source must be enabled and terms-reviewed before issuing a collector token`.
+
+Граница проверки на момент записи:
+- GitHub PR #3 создан как Draft, не слит в main.
+- CI run `45051267622` был замечен в состоянии `in_progress`; итоговый результат ещё не подтверждён.
+- Реальный сбор из авторизованного Firefox/VK, стабильность текущих DOM-селекторов, реальная передача данных в Supabase и запуск в Kali/VMware НЕ ПРОВЕРЕНЫ.
+- Не выпускать токен и не включать источник, пока не проверены действующие правила VK и не подтверждён допустимый сценарий.
+- CLI пока не встроен в новую кнопку/панель desktop UI; это отдельный модуль.
+- Классификация эвристическая и не является доказательством покупательского намерения.
+
+Следующий шаг: дождаться CI, исправить найденные ошибки, затем выполнить безопасный dry-run с реальной пользовательской VK-сессией без upload. Только после проверки условий источника и результата dry-run отдельно разрешать upload.
